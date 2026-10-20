@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "zakaz_fish"
+version = "0.1.0"
+description = "Парсер категорії «Риба та морепродукти» з zakaz.ua (етап 1)"
+requires-python = ">=3.11"
+dependencies = ["httpx", "beautifulsoup4", "lxml", "openpyxl"]
+
+[project.optional-dependencies]
+dev = ["pytest"]
+
+[tool.setuptools]
+packages = ["zakaz_fish"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

@@ -1,0 +1,408 @@
+{
+    "data": {
+        "deliverySchedules": {
+            "nearest": [
+                {
+                    "chainId": "alcohub",
+                    "storeId": "482779001",
+                    "slot": {
+                        "id": "e9977853eefe8dced9038ff1cb756160|Baykovyy",
+                        "date": "2026-10-20",
+                        "timeRange": "18:00 - 20:00",
+                        "updatedTimeWindowRange": null,
+                        "endOrderingTime": 1792501200000.0,
+                        "isOpen": true,
+                        "price": 12900,
+                        "currency": "uah",
+                        "availableDiscount": 0,
+                        "closeReasons": [],
+                        "__typename": "DeliverySlot"
+                    },
+                    "sortScore": 202,
+                    "__typename": "NearestDeliverySchedule"
+                },
+                {
+                    "chainId": "auchan",
+                    "storeId": "48246401",
+                    "slot": {
+                        "id": "e9977853eefe8dced9038ff1cb5fd57e|Obolon-All",
+                        "date": "2026-10-20",
+                        "timeRange": "18:00 - 20:00",
+                        "updatedTimeWindowRange": null,
+                        "endOrderingTime": 1792501200000.0,
+                        "isOpen": true,
+                        "price": 17900,
+                        "currency": "uah",
+                        "availableDiscount": 0,
+                        "closeReasons": [],
+                        "__typename": "DeliverySlot"
+                    },
+                    "sortScore": 202,
+                    "__typename": "NearestDeliverySchedule"
+                },
+                {
+                    "chainId": "biotus",
+                    "storeId": "482918001",
+                    "slot": {
+                        "id": "e9977853eefe8dced9038ff1cba68485|Pochayna",
+                        "date": "2026-10-21",
+                        "timeRange": "10:00 - 12:00",
+                        "updatedTimeWindowRange": null,
+                        "endOrderingTime": 1792558800000.0,
+                        "isOpen": true,
+                        "price": 12900,
+                        "currency": "uah",
+                        "availableDiscount": 0,
+                        "closeReasons": [],
+                        "__typename": "DeliverySlot"
+                    },
+                    "sortScore": 200,
+                    "__typename": "NearestDeliverySchedule"
+                },
+                {
+                    "chainId": "chudomarket",
+                    "storeId": "482330018",
+                    "slot": {
+                        "id": "f1e26c450d3fa016e7360821e2eb5c3d|kharkiv_east-b",
+                        "date": "2026-10-20",
+                        "timeRange": "19:00 - 21:00",
+                        "updatedTimeWindowRange": null,
+                        "endOrderingTime": 1792504800000.0,
+                        "isOpen": true,
+                        "price": 12900,
+                        "currency": "uah",
+                        "availableDiscount": 0,
+                        "closeReasons": [],
+                        "__typename": "DeliverySlot"
+                    },
+                    "sortScore": 201,
+                    "__typename": "NearestDeliverySchedule"
+                },
+                {
+                    "chainId": "cosmos",
+                    "storeId": "48225531",
+                    "slot": {
+                        "id": "e9977853eefe8dced9038ff1cb5bf18b|kiev_desnianskyi",
+                        "date": "2026-10-20",
+                        "timeRange": "18:00 - 20:00",
+                        "updatedTimeWindowRange": null,
+                        "endOrderingTime": 1792501200000.0,
+                        "isOpen": true,
+                        "price": 12900,
+                        "currency": "uah",
+                        "availableDiscount": 0,
+                        "closeReasons": [],
+                        "__typename": "DeliverySlot"
+                    },
+                    "sortScore": 202,
+                    "__typename": "NearestDeliverySchedule"
+                },
+                {
+                    "chainId": "ekomarket",
+                    "storeId": "482800245",
+                    "slot": {
+                        "id": "0a9629cd9fc91722ca6a9ee4a56f4f94|kiev_desnianskyi",
+                        "date": "2026-10-20",
+                        "timeRange": "18:00 - 20:00",
+                        "updatedTimeWindowRange": null,
+                        "endOrderingTime": 1792501200000.0,
+                        "isOpen": true,
+                        "price": 13900,
+                        "currency": "uah",
+                        "availableDiscount": 0,
+                        "closeReasons": [],
+                        "__typename": "DeliverySlot"
+                    },
+                    "sortScore": 202,
+                    "__typename": "NearestDeliverySchedule"
+                },
+                {
+                    "chainId": "epicentr",
+                    "storeId": "482374007",
+                    "slot": {
+                        "id": "e9977853eefe8dced9038ff1cb5e8cd6|auchan_lugova_express",
+                        "date": "2026-10-20",
+                        "timeRange": "18:00 - 20:00",
+                        "updatedTimeWindowRange": null,
+                        "endOrderingTime": 1792501200000.0,
+                        "isOpen": true,
+                        "price": 13900,
+                        "currency": "uah",
+                        "availableDiscount": 0,
+                        "closeReasons": [],
+                        "__typename": "DeliverySlot"
+                    },
+                    "sortScore": 202,
+                    "__typename": "NearestDeliverySchedule"
+                },
+                {
+                    "chainId": "grono",
+                    "storeId": "482476001",
+                    "slot": {
+                        "id": "58f17957d79219cb4f44096909edf9db|Vinnytsya-tsentr",
+                        "date": "2026-10-20",
+                        "timeRange": "18:00 - 20:00",
+                        "updatedTimeWindowRange": null,
+                        "endOrderingTime": 1792501200000.0,
+                        "isOpen": true,
+                        "price": 14900,
+                        "currency": "uah",
+                        "availableDiscount": 0,
+                        "closeReasons": [],
+                        "__typename": "DeliverySlot"
+                    },
+                    "sortScore": 202,
+                    "__typename": "NearestDeliverySchedule"
+                },
+                {
+                    "chainId": "ideal",
+                    "storeId": "482596001",
+                    "slot": {
+                        "id": "58f17957d79219cb4f44096909f2d2f9|OD_Malinovskiy",
+                        "date": "2026-10-20",
+                        "timeRange": "18:00 - 20:00",
+                        "updatedTimeWindowRange": null,
+                        "endOrderingTime": 1792501200000.0,
+                        "isOpen": true,
+                        "price": 12900,
+                        "currency": "uah",
+                        "availableDiscount": 0,
+                        "closeReasons": [],
+                        "__typename": "DeliverySlot"
+                    },
+                    "sortScore": 202,
+                    "__typename": "NearestDeliverySchedule"
+                },
+                {
+                    "chainId": "kharkiv",
+                    "storeId": "482320001",
+                    "slot": {
+                        "id": "f1e26c450d3fa016e7360821e2eae17c|kharkiv_north",
+                        "date": "2026-10-20",
+                        "timeRange": "18:00 - 20:00",
+                        "updatedTimeWindowRange": null,
+                        "endOrderingTime": 1792501200000.0,
+                        "isOpen": true,
+                        "price": 12900,
+                        "currency": "uah",
+                        "availableDiscount": 0,
+                        "closeReasons": [],
+                        "__typename": "DeliverySlot"
+                    },
+                    "sortScore": 202,
+                    "__typename": "NearestDeliverySchedule"
+                },
+                {
+                    "chainId": "masterzoo",
+                    "storeId": "482917587",
+                    "slot": {
+                        "id": "e9977853eefe8dced9038ff1cb7b6c4c|Syrets",
+                        "date": "2026-10-20",
+                        "timeRange": "18:00 - 20:00",
+                        "updatedTimeWindowRange": null,
+                        "endOrderingTime": 1792501200000.0,
+                        "isOpen": true,
+                        "price": 12900,
+                        "currency": "uah",
+                        "availableDiscount": 0,
+                        "closeReasons": [],
+                        "__typename": "DeliverySlot"
+                    },
+                    "sortScore": 202,
+                    "__typename": "NearestDeliverySchedule"
+                },
+                {
+                    "chainId": "megamarket",
+                    "storeId": "48267602",
+                    "slot": {
+                        "id": "e9977853eefe8dced9038ff1cb6ac577|Komarova",
+                        "date": "2026-10-20",
+                        "timeRange": "19:00 - 20:00",
+                        "updatedTimeWindowRange": null,
+                        "endOrderingTime": 1792504800000.0,
+                        "isOpen": true,
+                        "price": 13900,
+                        "currency": "uah",
+                        "availableDiscount": 0,
+                        "closeReasons": [],
+                        "__typename": "DeliverySlot"
+                    },
+                    "sortScore": 201,
+                    "__typename": "NearestDeliverySchedule"
+                },
+                {
+                    "chainId": "metro",
+                    "storeId": "48215611",
+                    "slot": {
+                        "id": "e9977853eefe8dced9038ff1cb58d421|Teremki-2",
+                        "date": "2026-10-20",
+                        "timeRange": "18:00 - 20:00",
+                        "updatedTimeWindowRange": null,
+                        "endOrderingTime": 1792497600000.0,
+                        "isOpen": true,
+                        "price": 17900,
+                        "currency": "uah",
+                        "availableDiscount": 0,
+                        "closeReasons": [],
+                        "__typename": "DeliverySlot"
+                    },
+                    "sortScore": 202,
+                    "__typename": "NearestDeliverySchedule"
+                },
+                {
+                    "chainId": "novus",
+                    "storeId": "48201031",
+                    "slot": {
+                        "id": "0a9629cd9fc91722ca6a9ee4a545833d|Mostytsky",
+                        "date": "2026-10-20",
+                        "timeRange": "18:00 - 20:00",
+                        "updatedTimeWindowRange": null,
+                        "endOrderingTime": 1792501200000.0,
+                        "isOpen": true,
+                        "price": 17900,
+                        "currency": "uah",
+                        "availableDiscount": 0,
+                        "closeReasons": [],
+                        "__typename": "DeliverySlot"
+                    },
+                    "sortScore": 202,
+                    "__typename": "NearestDeliverySchedule"
+                },
+                {
+                    "chainId": "onde",
+                    "storeId": "482663071",
+                    "slot": {
+                        "id": "58f17957d79219cb4f44096909f3e858|CHR_Rynok",
+                        "date": "2026-10-20",
+                        "timeRange": "19:00 - 21:00",
+                        "updatedTimeWindowRange": null,
+                        "endOrderingTime": 1792504800000.0,
+                        "isOpen": true,
+                        "price": 13900,
+                        "currency": "uah",
+                        "availableDiscount": 0,
+                        "closeReasons": [],
+                        "__typename": "DeliverySlot"
+                    },
+                    "sortScore": 201,
+                    "__typename": "NearestDeliverySchedule"
+                },
+                {
+                    "chainId": "tavriav",
+                    "storeId": "482211449",
+                    "slot": {
+                        "id": "58f17957d79219cb4f44096909df7a1a|Odesa-suvorovskii-B2",
+                        "date": "2026-10-20",
+                        "timeRange": "18:00 - 20:00",
+                        "updatedTimeWindowRange": null,
+                        "endOrderingTime": 1792503000000.0,
+                        "isOpen": true,
+                        "price": 12900,
+                        "currency": "uah",
+                        "availableDiscount": 0,
+                        "closeReasons": [],
+                        "__typename": "DeliverySlot"
+                    },
+                    "sortScore": 202,
+                    "__typename": "NearestDeliverySchedule"
+                },
+                {
+                    "chainId": "torba",
+                    "storeId": "482867220",
+                    "slot": {
+                        "id": "1cbf85676f9e4ef602744ed442044e69|RVN_Haharina",
+                        "date": "2026-10-20",
+                        "timeRange": "18:00 - 20:00",
+                        "updatedTimeWindowRange": null,
+                        "endOrderingTime": 1792501200000.0,
+                        "isOpen": true,
+                        "price": 12900,
+                        "currency": "uah",
+                        "availableDiscount": 0,
+                        "closeReasons": [],
+                        "__typename": "DeliverySlot"
+                    },
+                    "sortScore": 202,
+                    "__typename": "NearestDeliverySchedule"
+                },
+                {
+                    "chainId": "ultramarket",
+                    "storeId": "48277601",
+                    "slot": {
+                        "id": "50603d4407f8e2664b4949ffe66b7e3b|Baykovyy",
+                        "date": "2026-10-20",
+                        "timeRange": "18:00 - 20:00",
+                        "updatedTimeWindowRange": null,
+                        "endOrderingTime": 1792501200000.0,
+                        "isOpen": true,
+                        "price": 13900,
+                        "currency": "uah",
+                        "availableDiscount": 0,
+                        "closeReasons": [],
+                        "__typename": "DeliverySlot"
+                    },
+                    "sortScore": 202,
+                    "__typename": "NearestDeliverySchedule"
+                },
+                {
+                    "chainId": "vostorg",
+                    "storeId": "48231001",
+                    "slot": {
+                        "id": "f1e26c450d3fa016e7360821e2e8ae4c|kharkiv_north",
+                        "date": "2026-10-20",
+                        "timeRange": "18:00 - 20:00",
+                        "updatedTimeWindowRange": null,
+                        "endOrderingTime": 1792501200000.0,
+                        "isOpen": true,
+                        "price": 12900,
+                        "currency": "uah",
+                        "availableDiscount": 0,
+                        "closeReasons": [],
+                        "__typename": "DeliverySlot"
+                    },
+                    "sortScore": 202,
+                    "__typename": "NearestDeliverySchedule"
+                },
+                {
+                    "chainId": "winetime",
+                    "storeId": "482550001",
+                    "slot": {
+                        "id": "e9977853eefe8dced9038ff1cb64972b|Poznyaki",
+                        "date": "2026-10-20",
+                        "timeRange": "18:00 - 20:00",
+                        "updatedTimeWindowRange": null,
+                        "endOrderingTime": 1792501200000.0,
+                        "isOpen": true,
+                        "price": 12900,
+                        "currency": "uah",
+                        "availableDiscount": 0,
+                        "closeReasons": [],
+                        "__typename": "DeliverySlot"
+                    },
+                    "sortScore": 202,
+                    "__typename": "NearestDeliverySchedule"
+                },
+                {
+                    "chainId": "zaraz",
+                    "storeId": "482778001",
+                    "slot": {
+                        "id": "e9977853eefe8dced9038ff1cb741d68|Baykovyy",
+                        "date": "2026-10-20",
+                        "timeRange": "18:00 - 20:00",
+                        "updatedTimeWindowRange": null,
+                        "endOrderingTime": 1792501200000.0,
+                        "isOpen": true,
+                        "price": 13900,
+                        "currency": "uah",
+                        "availableDiscount": 0,
+                        "closeReasons": [],
+                        "__typename": "DeliverySlot"
+                    },
+                    "sortScore": 202,
+                    "__typename": "NearestDeliverySchedule"
+                }
+            ],
+            "__typename": "DeliverySchedulesQuery"
+        }
+    }
+}

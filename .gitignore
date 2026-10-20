@@ -1,0 +1,29 @@
+# Дані запусків: база, сирі відповіді, експорт, логи
+data/
+
+# Локальний конфіг (може містити contact_email); config.example.toml лишається в репозиторії
+config.toml
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# macOS / редактори
+.DS_Store
+.idea/
+.vscode/
+
+# Дублікати ТЗ (джерело правди: SPEC.md і tests/fixtures/)
+zakaz_fish_spec/
+zakaz_fish_spec.zip
+
+graphql_*_responce.json
+tests/fixtures/live/

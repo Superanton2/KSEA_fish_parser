@@ -1,0 +1,12 @@
+city = "kyiv"
+lang = "uk"
+root_category = "fish-and-seafood-zakaz"
+db_path = "data/zakaz_fish.sqlite"
+raw_dir = "data/raw"
+delay_min_s = 1.5
+delay_max_s = 3.0
+timeout_s = 30
+max_pages_per_category = 100
+user_agent = "KSEA-FishMarketResearch/0.1"
+contact_email = ""            # заповнює користувач; додається в User-Agent як (+mailto:...)
+store_descriptions = false

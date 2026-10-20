@@ -1,0 +1,644 @@
+{
+    "data": {
+        "chains": [
+            {
+                "id": "alcohub",
+                "name": "AlcoHub",
+                "logo": "https://img01.zakaz.global/chains/alcohub/logo.svg",
+                "hostname": "alcohub.zakaz.ua",
+                "__typename": "Chain"
+            },
+            {
+                "id": "auchan",
+                "name": "Auchan",
+                "logo": "https://img01.zakaz.global/chains/auchan/logo.svg",
+                "hostname": "auchan.zakaz.ua",
+                "__typename": "Chain"
+            },
+            {
+                "id": "biotus",
+                "name": "\u0411\u0456\u043e\u0442\u0443\u0441",
+                "logo": "https://img01.zakaz.global/chains/biotus/logo.svg",
+                "hostname": "biotus.zakaz.ua",
+                "__typename": "Chain"
+            },
+            {
+                "id": "chudomarket",
+                "name": "\u0427\u0443\u0434\u043e \u041c\u0430\u0440\u043a\u0435\u0442",
+                "logo": "https://img01.zakaz.global/chains/chudomarket/logo.svg",
+                "hostname": "chudomarket.zakaz.ua",
+                "__typename": "Chain"
+            },
+            {
+                "id": "cosmos",
+                "name": "\u041a\u041e\u0421\u041c\u041e\u0421",
+                "logo": "https://img01.zakaz.global/chains/cosmos/logo.svg",
+                "hostname": "cosmos.zakaz.ua",
+                "__typename": "Chain"
+            },
+            {
+                "id": "ekomarket",
+                "name": "\u0415\u041a\u041e \u041c\u0430\u0440\u043a\u0435\u0442",
+                "logo": "https://img01.zakaz.global/chains/ekomarket/logo.svg",
+                "hostname": "eko.zakaz.ua",
+                "__typename": "Chain"
+            },
+            {
+                "id": "epicentr",
+                "name": "\u0415\u043f\u0456\u0446\u0435\u043d\u0442\u0440 FOOD",
+                "logo": "https://img01.zakaz.global/chains/epicentr/logo.svg",
+                "hostname": "epicentrfood.zakaz.ua",
+                "__typename": "Chain"
+            },
+            {
+                "id": "grono",
+                "name": "Grono",
+                "logo": "https://img01.zakaz.global/chains/grono/logo.svg",
+                "hostname": "grono.zakaz.ua",
+                "__typename": "Chain"
+            },
+            {
+                "id": "ideal",
+                "name": "\u0406\u0434\u0435\u0430\u043b",
+                "logo": "https://img01.zakaz.global/chains/ideal/logo.svg",
+                "hostname": "ideal.zakaz.ua",
+                "__typename": "Chain"
+            },
+            {
+                "id": "kharkiv",
+                "name": "C\u0443\u043f\u0435\u0440\u043c\u0430\u0440\u043a\u0435\u0442 \"\u0425\u0430\u0440\u043a\u0456\u0432\"",
+                "logo": "https://img01.zakaz.global/chains/kharkiv/logo.svg",
+                "hostname": "kharkiv.zakaz.ua",
+                "__typename": "Chain"
+            },
+            {
+                "id": "masterzoo",
+                "name": "MasterZoo",
+                "logo": "https://img01.zakaz.global/chains/masterzoo/logo.svg",
+                "hostname": "masterzoo.zakaz.ua",
+                "__typename": "Chain"
+            },
+            {
+                "id": "megamarket",
+                "name": "\u041c\u0435\u0433\u0430\u041c\u0430\u0440\u043a\u0435\u0442",
+                "logo": "https://img01.zakaz.global/logos/retailers/megamarket.svg",
+                "hostname": "megamarket.zakaz.ua",
+                "__typename": "Chain"
+            },
+            {
+                "id": "metro",
+                "name": "METRO",
+                "logo": "https://img01.zakaz.global/chains/metro/logo.svg",
+                "hostname": "metro.zakaz.ua",
+                "__typename": "Chain"
+            },
+            {
+                "id": "novus",
+                "name": "NOVUS",
+                "logo": "https://img01.zakaz.global/chains/novus/logo.svg",
+                "hostname": "novus.zakaz.ua",
+                "__typename": "Chain"
+            },
+            {
+                "id": "onde",
+                "name": "\u041e\u043dDe",
+                "logo": "https://img01.zakaz.global/chains/onde/logo.svg",
+                "hostname": "onde.zakaz.ua",
+                "__typename": "Chain"
+            },
+            {
+                "id": "tavriav",
+                "name": "\u0422\u0430\u0432\u0440\u0456\u044f \u0412",
+                "logo": "https://img01.zakaz.global/chains/tavriav/logo.svg",
+                "hostname": "tavriav.zakaz.ua",
+                "__typename": "Chain"
+            },
+            {
+                "id": "torba",
+                "name": "\u0422\u043e\u0440\u0431\u0430",
+                "logo": "https://img01.zakaz.global/chains/torba/logo.svg",
+                "hostname": "torba.zakaz.ua",
+                "__typename": "Chain"
+            },
+            {
+                "id": "ultramarket",
+                "name": "ULTRAMARKET",
+                "logo": "https://img01.zakaz.global/chains/ultramarket/logo.svg",
+                "hostname": "ultramarket.zakaz.ua",
+                "__typename": "Chain"
+            },
+            {
+                "id": "vostorg",
+                "name": "\u0412\u043e\u0441\u0442\u043e\u0440\u0433",
+                "logo": "https://img01.zakaz.global/chains/vostorg/logo.svg",
+                "hostname": "vostorg.zakaz.ua",
+                "__typename": "Chain"
+            },
+            {
+                "id": "winetime",
+                "name": "WINETIME",
+                "logo": "https://img01.zakaz.global/chains/winetime/logo.svg?v=1",
+                "hostname": "winetime.zakaz.ua",
+                "__typename": "Chain"
+            },
+            {
+                "id": "zaraz",
+                "name": "\u0417\u0430 \u0420\u0430\u0437",
+                "logo": "https://img01.zakaz.global/chains/zaraz/logo.svg",
+                "hostname": "zaraz.zakaz.ua",
+                "__typename": "Chain"
+            }
+        ],
+        "carts": {
+            "items": [
+                {
+                    "chainId": "alcohub",
+                    "count": 0,
+                    "sortScore": 0,
+                    "__typename": "CartItems"
+                },
+                {
+                    "chainId": "auchan",
+                    "count": 0,
+                    "sortScore": 201000,
+                    "__typename": "CartItems"
+                },
+                {
+                    "chainId": "biotus",
+                    "count": 0,
+                    "sortScore": 0,
+                    "__typename": "CartItems"
+                },
+                {
+                    "chainId": "chudomarket",
+                    "count": 0,
+                    "sortScore": 0,
+                    "__typename": "CartItems"
+                },
+                {
+                    "chainId": "cosmos",
+                    "count": 0,
+                    "sortScore": 0,
+                    "__typename": "CartItems"
+                },
+                {
+                    "chainId": "ekomarket",
+                    "count": 0,
+                    "sortScore": 0,
+                    "__typename": "CartItems"
+                },
+                {
+                    "chainId": "epicentr",
+                    "count": 0,
+                    "sortScore": 0,
+                    "__typename": "CartItems"
+                },
+                {
+                    "chainId": "grono",
+                    "count": 0,
+                    "sortScore": 0,
+                    "__typename": "CartItems"
+                },
+                {
+                    "chainId": "ideal",
+                    "count": 0,
+                    "sortScore": 0,
+                    "__typename": "CartItems"
+                },
+                {
+                    "chainId": "kharkiv",
+                    "count": 0,
+                    "sortScore": 0,
+                    "__typename": "CartItems"
+                },
+                {
+                    "chainId": "masterzoo",
+                    "count": 0,
+                    "sortScore": 0,
+                    "__typename": "CartItems"
+                },
+                {
+                    "chainId": "megamarket",
+                    "count": 0,
+                    "sortScore": 0,
+                    "__typename": "CartItems"
+                },
+                {
+                    "chainId": "metro",
+                    "count": 0,
+                    "sortScore": 200000,
+                    "__typename": "CartItems"
+                },
+                {
+                    "chainId": "novus",
+                    "count": 0,
+                    "sortScore": 202000,
+                    "__typename": "CartItems"
+                },
+                {
+                    "chainId": "onde",
+                    "count": 0,
+                    "sortScore": 0,
+                    "__typename": "CartItems"
+                },
+                {
+                    "chainId": "tavriav",
+                    "count": 0,
+                    "sortScore": 0,
+                    "__typename": "CartItems"
+                },
+                {
+                    "chainId": "torba",
+                    "count": 0,
+                    "sortScore": 0,
+                    "__typename": "CartItems"
+                },
+                {
+                    "chainId": "ultramarket",
+                    "count": 0,
+                    "sortScore": 0,
+                    "__typename": "CartItems"
+                },
+                {
+                    "chainId": "vostorg",
+                    "count": 0,
+                    "sortScore": 0,
+                    "__typename": "CartItems"
+                },
+                {
+                    "chainId": "winetime",
+                    "count": 0,
+                    "sortScore": 0,
+                    "__typename": "CartItems"
+                },
+                {
+                    "chainId": "zaraz",
+                    "count": 0,
+                    "sortScore": 0,
+                    "__typename": "CartItems"
+                }
+            ],
+            "__typename": "CartsQuery"
+        },
+        "notifications": {
+            "counts": [],
+            "__typename": "NotificationsQuery"
+        },
+        "promotions": {
+            "main": [
+                {
+                    "id": "89d11d3cbf003db0f45c3b64b115e795",
+                    "chainId": "alcohub",
+                    "promoText": "\u0414\u043e\u0441\u0442\u0430\u0432\u043a\u0430 0",
+                    "iconUrl": "https://img4.zakaz.ua/o2/promotion-icons/default.svg",
+                    "showcaseInfo": "<p>\u0411\u0435\u0437\u043a\u043e\u0448\u0442\u043e\u0432\u043d\u0430* \u043f\u0435\u0440\u0448\u0430 \u0434\u043e\u0441\u0442\u0430\u0432\u043a\u0430 \u043f\u0440\u0438 \u0447\u0435\u043a\u0443 \u0432\u0456\u0434 1000 \u0433\u0440\u043d</p>",
+                    "showcaseInfoPlainText": "\u0411\u0435\u0437\u043a\u043e\u0448\u0442\u043e\u0432\u043d\u0430* \u043f\u0435\u0440\u0448\u0430 \u0434\u043e\u0441\u0442\u0430\u0432\u043a\u0430 \u043f\u0440\u0438 \u0447\u0435\u043a\u0443 \u0432\u0456\u0434 1000 \u0433\u0440\u043d\n",
+                    "__typename": "Promotion"
+                },
+                {
+                    "id": "f8b9d3bb24fa1dcf91411b1dbd0beb31",
+                    "chainId": "auchan",
+                    "promoText": "\u0414\u043e\u0441\u0442\u0430\u0432\u043a\u0430 0",
+                    "iconUrl": "https://img4.zakaz.ua/o2/promotion-icons/default.svg",
+                    "showcaseInfo": "<p>\u0411\u0435\u0437\u043a\u043e\u0448\u0442\u043e\u0432\u043d\u0430* \u043f\u0435\u0440\u0448\u0430 \u0434\u043e\u0441\u0442\u0430\u0432\u043a\u0430 \u043f\u0440\u0438 \u0447\u0435\u043a\u0443 \u0432\u0456\u0434 1999 \u0433\u0440\u043d</p>",
+                    "showcaseInfoPlainText": "\u0411\u0435\u0437\u043a\u043e\u0448\u0442\u043e\u0432\u043d\u0430* \u043f\u0435\u0440\u0448\u0430 \u0434\u043e\u0441\u0442\u0430\u0432\u043a\u0430 \u043f\u0440\u0438 \u0447\u0435\u043a\u0443 \u0432\u0456\u0434 1999 \u0433\u0440\u043d\n",
+                    "__typename": "Promotion"
+                },
+                {
+                    "id": "89d11d3cbf003db0f45c3b64b1a6a2bb",
+                    "chainId": "biotus",
+                    "promoText": "\u0414\u043e\u0441\u0442\u0430\u0432\u043a\u0430 0",
+                    "iconUrl": "https://img4.zakaz.ua/o2/promotion-icons/default.svg",
+                    "showcaseInfo": "<p>\u0411\u0435\u0437\u043a\u043e\u0448\u0442\u043e\u0432\u043d\u0430* \u043f\u0435\u0440\u0448\u0430 \u0434\u043e\u0441\u0442\u0430\u0432\u043a\u0430 \u043f\u0440\u0438 \u0447\u0435\u043a\u0443 \u0432\u0456\u0434 1000 \u0433\u0440\u043d</p>",
+                    "showcaseInfoPlainText": "\u0411\u0435\u0437\u043a\u043e\u0448\u0442\u043e\u0432\u043d\u0430* \u043f\u0435\u0440\u0448\u0430 \u0434\u043e\u0441\u0442\u0430\u0432\u043a\u0430 \u043f\u0440\u0438 \u0447\u0435\u043a\u0443 \u0432\u0456\u0434 1000 \u0433\u0440\u043d\n",
+                    "__typename": "Promotion"
+                },
+                {
+                    "id": "1da5ee44aa0c1069272051e65712373c",
+                    "chainId": "chudomarket",
+                    "promoText": "\u0414\u043e\u0441\u0442\u0430\u0432\u043a\u0430 0",
+                    "iconUrl": "https://img4.zakaz.ua/o2/promotion-icons/default.svg",
+                    "showcaseInfo": "<p>\u0411\u0435\u0437\u043a\u043e\u0448\u0442\u043e\u0432\u043d\u0430* \u043f\u0435\u0440\u0448\u0430 \u0434\u043e\u0441\u0442\u0430\u0432\u043a\u0430 \u043f\u0440\u0438 \u0447\u0435\u043a\u0443 \u0432\u0456\u0434 2000 \u0433\u0440\u043d</p>",
+                    "showcaseInfoPlainText": "\u0411\u0435\u0437\u043a\u043e\u0448\u0442\u043e\u0432\u043d\u0430* \u043f\u0435\u0440\u0448\u0430 \u0434\u043e\u0441\u0442\u0430\u0432\u043a\u0430 \u043f\u0440\u0438 \u0447\u0435\u043a\u0443 \u0432\u0456\u0434 2000 \u0433\u0440\u043d\n",
+                    "__typename": "Promotion"
+                },
+                {
+                    "id": "2af869b13a2b07a7bd7e91961c00e24b",
+                    "chainId": "cosmos",
+                    "promoText": "\u0414\u043e\u0441\u0442\u0430\u0432\u043a\u0430 0",
+                    "iconUrl": "https://img4.zakaz.ua/o2/promotion-icons/pickup.svg",
+                    "showcaseInfo": "<p>\u0417\u043d\u0438\u0436\u043a\u0430 \u043d\u0430 \u0434\u043e\u0441\u0442\u0430\u0432\u043a\u0443 - \u043f\u043e\u0434\u0456\u043b\u0438\u0441\u044c \u0437 \u0434\u0440\u0443\u0433\u043e\u043c!</p>",
+                    "showcaseInfoPlainText": "\u0417\u043d\u0438\u0436\u043a\u0430 \u043d\u0430 \u0434\u043e\u0441\u0442\u0430\u0432\u043a\u0443 - \u043f\u043e\u0434\u0456\u043b\u0438\u0441\u044c \u0437 \u0434\u0440\u0443\u0433\u043e\u043c!\n",
+                    "__typename": "Promotion"
+                },
+                {
+                    "id": "8a9893104cbf7e0d717e1f1e81b3ce08",
+                    "chainId": "ekomarket",
+                    "promoText": "\u0414\u043e\u0441\u0442\u0430\u0432\u043a\u0430 0",
+                    "iconUrl": "https://img4.zakaz.ua/o2/promotion-icons/courier.svg",
+                    "showcaseInfo": "<p>\u0411\u0435\u0437\u043a\u043e\u0448\u0442\u043e\u0432\u043d\u0430* \u0434\u043e\u0441\u0442\u0430\u0432\u043a\u0430 \u043f\u0440\u0438 \u0447\u0435\u043a\u0443 \u0432\u0456\u0434 2500 \u0433\u0440\u043d</p>",
+                    "showcaseInfoPlainText": "\u0411\u0435\u0437\u043a\u043e\u0448\u0442\u043e\u0432\u043d\u0430* \u0434\u043e\u0441\u0442\u0430\u0432\u043a\u0430 \u043f\u0440\u0438 \u0447\u0435\u043a\u0443 \u0432\u0456\u0434 2500 \u0433\u0440\u043d\n",
+                    "__typename": "Promotion"
+                },
+                {
+                    "id": "6a7405a8945b6a6f27c709b48cd0c2af",
+                    "chainId": "epicentr",
+                    "promoText": "\u0414\u043e\u0441\u0442\u0430\u0432\u043a\u0430 0",
+                    "iconUrl": "https://img4.zakaz.ua/o2/promotion-icons/pickup.svg",
+                    "showcaseInfo": "<p>\u0417\u043d\u0438\u0436\u043a\u0430 \u043d\u0430 \u0434\u043e\u0441\u0442\u0430\u0432\u043a\u0443 - \u043f\u043e\u0434\u0456\u043b\u0438\u0441\u044c \u0437 \u0434\u0440\u0443\u0433\u043e\u043c!</p>",
+                    "showcaseInfoPlainText": "\u0417\u043d\u0438\u0436\u043a\u0430 \u043d\u0430 \u0434\u043e\u0441\u0442\u0430\u0432\u043a\u0443 - \u043f\u043e\u0434\u0456\u043b\u0438\u0441\u044c \u0437 \u0434\u0440\u0443\u0433\u043e\u043c!\n",
+                    "__typename": "Promotion"
+                },
+                {
+                    "id": "61f31d6925249370079a168061138bd4",
+                    "chainId": "grono",
+                    "promoText": "\u0414\u043e\u0441\u0442\u0430\u0432\u043a\u0430 0",
+                    "iconUrl": "https://img4.zakaz.ua/o2/promotion-icons/pickup.svg",
+                    "showcaseInfo": "<p>\u0417\u043d\u0438\u0436\u043a\u0430 \u043d\u0430 \u0434\u043e\u0441\u0442\u0430\u0432\u043a\u0443 - \u043f\u043e\u0434\u0456\u043b\u0438\u0441\u044c \u0437 \u0434\u0440\u0443\u0433\u043e\u043c!</p>",
+                    "showcaseInfoPlainText": "\u0417\u043d\u0438\u0436\u043a\u0430 \u043d\u0430 \u0434\u043e\u0441\u0442\u0430\u0432\u043a\u0443 - \u043f\u043e\u0434\u0456\u043b\u0438\u0441\u044c \u0437 \u0434\u0440\u0443\u0433\u043e\u043c!\n",
+                    "__typename": "Promotion"
+                },
+                {
+                    "id": "060ec021789a78d83216af5a9d90d5e1",
+                    "chainId": "ideal",
+                    "promoText": "\u041e\u041f\u0422 \u0426\u0456\u043d\u0430\ud83d\udc9a",
+                    "iconUrl": "https://img4.zakaz.ua/o2/promotion-icons/promo.svg",
+                    "showcaseInfo": "<p>\u041a\u0443\u043f\u0443\u0439 \u0431\u0456\u043b\u044c\u0448\u0435 \u2014 \u043f\u043b\u0430\u0442\u0438 \u043c\u0435\u043d\u0448\u0435</p>",
+                    "showcaseInfoPlainText": "\u041a\u0443\u043f\u0443\u0439 \u0431\u0456\u043b\u044c\u0448\u0435 \u2014 \u043f\u043b\u0430\u0442\u0438 \u043c\u0435\u043d\u0448\u0435\n",
+                    "__typename": "Promotion"
+                },
+                {
+                    "id": "c92c102ea98f136ee38532df90667efc",
+                    "chainId": "kharkiv",
+                    "promoText": "\u0414\u043e\u0441\u0442\u0430\u0432\u043a\u0430 0",
+                    "iconUrl": "https://img4.zakaz.ua/o2/promotion-icons/courier.svg",
+                    "showcaseInfo": "<p>\u0411\u0435\u0437\u043a\u043e\u0448\u0442\u043e\u0432\u043d\u0430* \u0434\u043e\u0441\u0442\u0430\u0432\u043a\u0430 \u043f\u0440\u0438 \u0447\u0435\u043a\u0443 \u0432\u0456\u0434 3500 \u0433\u0440\u043d</p>",
+                    "showcaseInfoPlainText": "\u0411\u0435\u0437\u043a\u043e\u0448\u0442\u043e\u0432\u043d\u0430* \u0434\u043e\u0441\u0442\u0430\u0432\u043a\u0430 \u043f\u0440\u0438 \u0447\u0435\u043a\u0443 \u0432\u0456\u0434 3500 \u0433\u0440\u043d\n",
+                    "__typename": "Promotion"
+                },
+                {
+                    "id": "780501cad4511638556dbe533d6c3384",
+                    "chainId": "masterzoo",
+                    "promoText": "\u0414\u043e\u0441\u0442\u0430\u0432\u043a\u0430 0",
+                    "iconUrl": "https://img4.zakaz.ua/o2/promotion-icons/pickup.svg",
+                    "showcaseInfo": "<p>\u0417\u043d\u0438\u0436\u043a\u0430 \u043d\u0430 \u0434\u043e\u0441\u0442\u0430\u0432\u043a\u0443 - \u043f\u043e\u0434\u0456\u043b\u0438\u0441\u044c \u0437 \u0434\u0440\u0443\u0433\u043e\u043c!</p>",
+                    "showcaseInfoPlainText": "\u0417\u043d\u0438\u0436\u043a\u0430 \u043d\u0430 \u0434\u043e\u0441\u0442\u0430\u0432\u043a\u0443 - \u043f\u043e\u0434\u0456\u043b\u0438\u0441\u044c \u0437 \u0434\u0440\u0443\u0433\u043e\u043c!\n",
+                    "__typename": "Promotion"
+                },
+                {
+                    "id": "17c4eb1bc75505c9d49f6955a134ceec",
+                    "chainId": "megamarket",
+                    "promoText": "\u0414\u043e\u0441\u0442\u0430\u0432\u043a\u0430 0",
+                    "iconUrl": "https://img4.zakaz.ua/o2/promotion-icons/default.svg",
+                    "showcaseInfo": "<p>\u0417\u043d\u0438\u0436\u043a\u0430 \u043d\u0430 \u0434\u043e\u0441\u0442\u0430\u0432\u043a\u0443 - \u043f\u043e\u0434\u0456\u043b\u0438\u0441\u044c \u0437 \u0434\u0440\u0443\u0433\u043e\u043c!</p>",
+                    "showcaseInfoPlainText": "\u0417\u043d\u0438\u0436\u043a\u0430 \u043d\u0430 \u0434\u043e\u0441\u0442\u0430\u0432\u043a\u0443 - \u043f\u043e\u0434\u0456\u043b\u0438\u0441\u044c \u0437 \u0434\u0440\u0443\u0433\u043e\u043c!\n",
+                    "__typename": "Promotion"
+                },
+                {
+                    "id": "9a54e68af380dce40aadbeb291017a65",
+                    "chainId": "novus",
+                    "promoText": "\u041e\u041f\u0422 \u0426\u0456\u043d\u0430\ud83d\udc9a",
+                    "iconUrl": "https://img4.zakaz.ua/o2/promotion-icons/default.svg",
+                    "showcaseInfo": "<p>\u041a\u0443\u043f\u0443\u0439 \u0431\u0456\u043b\u044c\u0448\u0435 \u2014 \u043f\u043b\u0430\u0442\u0438 \u043c\u0435\u043d\u0448\u0435</p>",
+                    "showcaseInfoPlainText": "\u041a\u0443\u043f\u0443\u0439 \u0431\u0456\u043b\u044c\u0448\u0435 \u2014 \u043f\u043b\u0430\u0442\u0438 \u043c\u0435\u043d\u0448\u0435\n",
+                    "__typename": "Promotion"
+                },
+                {
+                    "id": "6a7405a8945b6a6f27c709b48cccdb0d",
+                    "chainId": "onde",
+                    "promoText": "\u0414\u043e\u0441\u0442\u0430\u0432\u043a\u0430 0",
+                    "iconUrl": "https://img4.zakaz.ua/o2/promotion-icons/pickup.svg",
+                    "showcaseInfo": "<p>\u0417\u043d\u0438\u0436\u043a\u0430 \u043d\u0430 \u0434\u043e\u0441\u0442\u0430\u0432\u043a\u0443 - \u043f\u043e\u0434\u0456\u043b\u0438\u0441\u044c \u0437 \u0434\u0440\u0443\u0433\u043e\u043c!</p>",
+                    "showcaseInfoPlainText": "\u0417\u043d\u0438\u0436\u043a\u0430 \u043d\u0430 \u0434\u043e\u0441\u0442\u0430\u0432\u043a\u0443 - \u043f\u043e\u0434\u0456\u043b\u0438\u0441\u044c \u0437 \u0434\u0440\u0443\u0433\u043e\u043c!\n",
+                    "__typename": "Promotion"
+                },
+                {
+                    "id": "1a1936fec5fe10587e3c3c688a21d23d",
+                    "chainId": "tavriav",
+                    "promoText": "\u0414\u043e\u0441\u0442\u0430\u0432\u043a\u0430 0",
+                    "iconUrl": "https://img4.zakaz.ua/o2/promotion-icons/courier.svg",
+                    "showcaseInfo": "<p>\u0411\u0435\u0437\u043a\u043e\u0448\u0442\u043e\u0432\u043d\u0430* \u0434\u043e\u0441\u0442\u0430\u0432\u043a\u0430 \u043f\u0440\u0438 \u0447\u0435\u043a\u0443 \u0432\u0456\u0434 2500 \u0433\u0440\u043d</p>",
+                    "showcaseInfoPlainText": "\u0411\u0435\u0437\u043a\u043e\u0448\u0442\u043e\u0432\u043d\u0430* \u0434\u043e\u0441\u0442\u0430\u0432\u043a\u0430 \u043f\u0440\u0438 \u0447\u0435\u043a\u0443 \u0432\u0456\u0434 2500 \u0433\u0440\u043d\n",
+                    "__typename": "Promotion"
+                },
+                {
+                    "id": "7f991d37a84b57e7a876d7f3c7dc8238",
+                    "chainId": "torba",
+                    "promoText": "\u041e\u041f\u0422 \u0426\u0456\u043d\u0430\ud83d\udc9a",
+                    "iconUrl": "https://img4.zakaz.ua/o2/promotion-icons/default.svg",
+                    "showcaseInfo": "<p>\u041a\u0443\u043f\u0443\u0439 \u0431\u0456\u043b\u044c\u0448\u0435 \u2014 \u043f\u043b\u0430\u0442\u0438 \u043c\u0435\u043d\u0448\u0435</p>",
+                    "showcaseInfoPlainText": "\u041a\u0443\u043f\u0443\u0439 \u0431\u0456\u043b\u044c\u0448\u0435 \u2014 \u043f\u043b\u0430\u0442\u0438 \u043c\u0435\u043d\u0448\u0435\n",
+                    "__typename": "Promotion"
+                },
+                {
+                    "id": "17c4eb1bc75505c9d49f6955a13d59ff",
+                    "chainId": "ultramarket",
+                    "promoText": "\u0414\u043e\u0441\u0442\u0430\u0432\u043a\u0430 0",
+                    "iconUrl": "https://img4.zakaz.ua/o2/promotion-icons/default.svg",
+                    "showcaseInfo": "<p>\u0417\u043d\u0438\u0436\u043a\u0430 \u043d\u0430 \u0434\u043e\u0441\u0442\u0430\u0432\u043a\u0443 - \u043f\u043e\u0434\u0456\u043b\u0438\u0441\u044c \u0437 \u0434\u0440\u0443\u0433\u043e\u043c!</p>",
+                    "showcaseInfoPlainText": "\u0417\u043d\u0438\u0436\u043a\u0430 \u043d\u0430 \u0434\u043e\u0441\u0442\u0430\u0432\u043a\u0443 - \u043f\u043e\u0434\u0456\u043b\u0438\u0441\u044c \u0437 \u0434\u0440\u0443\u0433\u043e\u043c!\n",
+                    "__typename": "Promotion"
+                },
+                {
+                    "id": "c92c102ea98f136ee38532df9066a8d7",
+                    "chainId": "vostorg",
+                    "promoText": "\u0414\u043e\u0441\u0442\u0430\u0432\u043a\u0430 0",
+                    "iconUrl": "https://img4.zakaz.ua/o2/promotion-icons/courier.svg",
+                    "showcaseInfo": "<p>\u0411\u0435\u0437\u043a\u043e\u0448\u0442\u043e\u0432\u043d\u0430* \u0434\u043e\u0441\u0442\u0430\u0432\u043a\u0430 \u043f\u0440\u0438 \u0447\u0435\u043a\u0443 \u0432\u0456\u0434 3500 \u0433\u0440\u043d</p>",
+                    "showcaseInfoPlainText": "\u0411\u0435\u0437\u043a\u043e\u0448\u0442\u043e\u0432\u043d\u0430* \u0434\u043e\u0441\u0442\u0430\u0432\u043a\u0430 \u043f\u0440\u0438 \u0447\u0435\u043a\u0443 \u0432\u0456\u0434 3500 \u0433\u0440\u043d\n",
+                    "__typename": "Promotion"
+                },
+                {
+                    "id": "89d11d3cbf003db0f45c3b64b196ee01",
+                    "chainId": "winetime",
+                    "promoText": "\u0414\u043e\u0441\u0442\u0430\u0432\u043a\u0430 0",
+                    "iconUrl": "https://img4.zakaz.ua/o2/promotion-icons/default.svg",
+                    "showcaseInfo": "<p>\u0411\u0435\u0437\u043a\u043e\u0448\u0442\u043e\u0432\u043d\u0430* \u043f\u0435\u0440\u0448\u0430 \u0434\u043e\u0441\u0442\u0430\u0432\u043a\u0430 \u043f\u0440\u0438 \u0447\u0435\u043a\u0443 \u0432\u0456\u0434 1500 \u0433\u0440\u043d</p>",
+                    "showcaseInfoPlainText": "\u0411\u0435\u0437\u043a\u043e\u0448\u0442\u043e\u0432\u043d\u0430* \u043f\u0435\u0440\u0448\u0430 \u0434\u043e\u0441\u0442\u0430\u0432\u043a\u0430 \u043f\u0440\u0438 \u0447\u0435\u043a\u0443 \u0432\u0456\u0434 1500 \u0433\u0440\u043d\n",
+                    "__typename": "Promotion"
+                },
+                {
+                    "id": "e892e619aecf85c6d7fe74d218483f3e",
+                    "chainId": "zaraz",
+                    "promoText": "\u0414\u043e\u0441\u0442\u0430\u0432\u043a\u0430 0",
+                    "iconUrl": "https://img4.zakaz.ua/o2/promotion-icons/default.svg",
+                    "showcaseInfo": "<p>\u0417\u043d\u0438\u0436\u043a\u0430 \u043d\u0430 \u0434\u043e\u0441\u0442\u0430\u0432\u043a\u0443 - \u043f\u043e\u0434\u0456\u043b\u0438\u0441\u044c \u0437 \u0434\u0440\u0443\u0433\u043e\u043c!</p>",
+                    "showcaseInfoPlainText": "\u0417\u043d\u0438\u0436\u043a\u0430 \u043d\u0430 \u0434\u043e\u0441\u0442\u0430\u0432\u043a\u0443 - \u043f\u043e\u0434\u0456\u043b\u0438\u0441\u044c \u0437 \u0434\u0440\u0443\u0433\u043e\u043c!\n",
+                    "__typename": "Promotion"
+                }
+            ],
+            "list": [
+                {
+                    "id": "b60fba9d9ed7b36e89eeac2decfd7ff6",
+                    "title": "\u0410\u043a\u0446\u0456\u044f \u00ab\u0417\u043d\u0438\u0436\u043a\u0438 \u043d\u0430 \u0434\u043e\u0441\u0442\u0430\u0432\u043a\u0443 \u0437 \u0415\u043a\u043e\u041c\u0430\u0440\u043a\u0435\u0442\u00bb",
+                    "slug": "promocode-ekomarket",
+                    "chainId": "ekomarket",
+                    "sortScore": 100000,
+                    "__typename": "Promotion"
+                },
+                {
+                    "id": "69a7263bd8f93e8ee5def8f896f75aab",
+                    "title": "\ud83d\ude9a \u0414\u043e\u0441\u0442\u0430\u0432\u043a\u0430 \u041d\u043e\u0432\u043e\u044e \u043f\u043e\u0448\u0442\u043e\u044e \u0432\u0456\u0434 Zakaz.ua",
+                    "slug": "novaposhtawinetime11",
+                    "chainId": "winetime",
+                    "sortScore": 100000,
+                    "__typename": "Promotion"
+                },
+                {
+                    "id": "c92c102ea98f136ee38532df905572af",
+                    "title": "\u0411\u0435\u0437\u043a\u043e\u0448\u0442\u043e\u0432\u043d\u0430* \u043f\u0435\u0440\u0448\u0430 \u0434\u043e\u0441\u0442\u0430\u0432\u043a\u0430 \u0434\u043b\u044f \u043d\u043e\u0432\u0438\u0445 \u041a\u043b\u0456\u0454\u043d\u0442\u0456\u0432",
+                    "slug": "freedeliverfornew-vostorg",
+                    "chainId": "vostorg",
+                    "sortScore": 100000,
+                    "__typename": "Promotion"
+                },
+                {
+                    "id": "f56bcf57cb5e0ee32f791797d2bc1219",
+                    "title": "\u0411\u0435\u0437\u043a\u043e\u0448\u0442\u043e\u0432\u043d\u0430* \u0434\u043e\u0441\u0442\u0430\u0432\u043a\u0430 \u043f\u0440\u0438 \u0447\u0435\u043a\u0443 \u0432\u0456\u0434 2 300 \u0433\u0440\u043d.! \u0417\u0430\u043c\u043e\u0432\u043b\u044f\u0439 \u043f\u043e \u0446\u0456\u043d\u0430\u043c \u043c\u0430\u0433\u0430\u0437\u0438\u043d\u0443",
+                    "slug": "freedelivery-biotus4",
+                    "chainId": "biotus",
+                    "sortScore": 100000,
+                    "__typename": "Promotion"
+                },
+                {
+                    "id": "89d11d3cbf003db0f45c3b64b115e795",
+                    "title": "\u0411\u0435\u0437\u043a\u043e\u0448\u0442\u043e\u0432\u043d\u0430* \u043f\u0435\u0440\u0448\u0430 \u0434\u043e\u0441\u0442\u0430\u0432\u043a\u0430 \u0434\u043b\u044f \u043d\u043e\u0432\u0438\u0445 \u041a\u043b\u0456\u0454\u043d\u0442\u0456\u0432 ",
+                    "slug": "freedelivery-alcohub-for-new1",
+                    "chainId": "alcohub",
+                    "sortScore": 100000,
+                    "__typename": "Promotion"
+                },
+                {
+                    "id": "a752f0bb484b62e8efab3aff6291d204",
+                    "title": "\u0411\u0435\u0437\u043a\u043e\u0448\u0442\u043e\u0432\u043d\u0430* \u0434\u043e\u0441\u0442\u0430\u0432\u043a\u0430 \u043f\u0440\u0438 \u0447\u0435\u043a\u0443 \u0432\u0456\u0434 1 499 \u0433\u0440\u043d",
+                    "slug": "freedelivery5torba1499",
+                    "chainId": "torba",
+                    "sortScore": 100000,
+                    "__typename": "Promotion"
+                },
+                {
+                    "id": "42ff7892191674486b30d158e3b80e8b",
+                    "title": "\u0410\u043a\u0446\u0456\u044f \u00ab\u0417\u043d\u0438\u0436\u043a\u0438 \u043d\u0430 \u0434\u043e\u0441\u0442\u0430\u0432\u043a\u0443 \u0437 \u0422\u0430\u0432\u0440\u0456\u044f \u0412\u00bb",
+                    "slug": "promocode-tavriav1",
+                    "chainId": "tavriav",
+                    "sortScore": 100000,
+                    "__typename": "Promotion"
+                },
+                {
+                    "id": "b79a202da70d3278b4bc977ff3cec30c",
+                    "title": "\u0421\u0430\u043c\u043e\u0432\u0438\u0432\u0456\u0437 \u0456\u0437 \u041a\u043e\u0441\u043c\u043e\u0441 \u0431\u0435\u0437\u043a\u043e\u0448\u0442\u043e\u0432\u043d\u043e*",
+                    "slug": "cosmos-samovyviz00",
+                    "chainId": "cosmos",
+                    "sortScore": 100000,
+                    "__typename": "Promotion"
+                },
+                {
+                    "id": "7d4331ee9ad8d37fe49d3dcd0568c65a",
+                    "title": "\u0411\u0435\u0437\u043a\u043e\u0448\u0442\u043e\u0432\u043d\u0430* \u0434\u043e\u0441\u0442\u0430\u0432\u043a\u0430 \u0437\u0430 \u0443\u043c\u043e\u0432\u0438 \u0437\u0430\u043c\u043e\u0432\u043b\u0435\u043d\u043d\u044f \u0431\u0443\u0434\u044c-\u044f\u043a\u043e\u0433\u043e \u0442\u043e\u0432\u0430\u0440\u0443 \u0437 \u043a\u0430\u0442\u0435\u0433\u043e\u0440\u0456\u0457 \u0417\u043d\u0438\u0436\u043a\u043eLOVE",
+                    "slug": "freedelivery-mm0910",
+                    "chainId": "megamarket",
+                    "sortScore": 100000,
+                    "__typename": "Promotion"
+                },
+                {
+                    "id": "964c421bdb74a026d3960ee039d36ab5",
+                    "title": "\u041f\u0456\u0434\u0442\u0440\u0438\u043c\u0430\u0439 3 \u041e\u0428\u0411\u0440 \u0440\u0430\u0437\u043e\u043c \u0437 Novus.zakaz.ua",
+                    "slug": "supportwithnovus",
+                    "chainId": "novus",
+                    "sortScore": 302000,
+                    "__typename": "Promotion"
+                },
+                {
+                    "id": "c92c102ea98f136ee38532df9055437e",
+                    "title": "\u0411\u0435\u0437\u043a\u043e\u0448\u0442\u043e\u0432\u043d\u0430* \u043f\u0435\u0440\u0448\u0430 \u0434\u043e\u0441\u0442\u0430\u0432\u043a\u0430 \u0434\u043b\u044f \u043d\u043e\u0432\u0438\u0445 \u041a\u043b\u0456\u0454\u043d\u0442\u0456\u0432",
+                    "slug": "freedeliverfornew-kharkiv",
+                    "chainId": "kharkiv",
+                    "sortScore": 100000,
+                    "__typename": "Promotion"
+                },
+                {
+                    "id": "f42aa554ed5fb6c1350f95f76e5eac55",
+                    "title": "\u0421\u0430\u043c\u043e\u0432\u0438\u0432\u0456\u0437 \u0437 METRO Drive",
+                    "slug": "metro-drive2",
+                    "chainId": "metro",
+                    "sortScore": 300000,
+                    "__typename": "Promotion"
+                },
+                {
+                    "id": "6a7405a8945b6a6f27c709b48cccdb0d",
+                    "title": "\u0410\u043a\u0446\u0456\u044f \u00ab\u0417\u043d\u0438\u0436\u043a\u0438 \u043d\u0430 \u0434\u043e\u0441\u0442\u0430\u0432\u043a\u0443 \u0437 O\u043dDe\u00bb",
+                    "slug": "promocode-onde",
+                    "chainId": "onde",
+                    "sortScore": 100000,
+                    "__typename": "Promotion"
+                },
+                {
+                    "id": "b43cbfd6f54a9cb0fc080c87a9484632",
+                    "title": "\u041a\u0443\u043f\u0443\u0439 \u0431\u0456\u043b\u044c\u0448\u0435 \u2014 \u043f\u043b\u0430\u0442\u0438 \u043c\u0435\u043d\u0448\u0435!",
+                    "slug": "auchanpayless",
+                    "chainId": "auchan",
+                    "sortScore": 301000,
+                    "__typename": "Promotion"
+                },
+                {
+                    "id": "8990482bd87e395325d39aaa74265c64",
+                    "title": "\u0411\u0435\u0437\u0433\u043e\u0442\u0456\u0432\u043a\u043e\u0432\u0430 \u0444\u043e\u0440\u043c\u0430 \u043e\u043f\u043b\u0430\u0442\u0438 \u044e\u0440\u0438\u0434\u0438\u0447\u043d\u0438\u0445 \u043e\u0441\u0456\u0431!",
+                    "slug": "b2b-ultramarket0710",
+                    "chainId": "ultramarket",
+                    "sortScore": 100000,
+                    "__typename": "Promotion"
+                },
+                {
+                    "id": "6a7405a8945b6a6f27c709b48cd0c2af",
+                    "title": "\u0410\u043a\u0446\u0456\u044f \u00ab\u0417\u043d\u0438\u0436\u043a\u0438 \u043d\u0430 \u0434\u043e\u0441\u0442\u0430\u0432\u043a\u0443 \u0437 \u0415\u043f\u0456\u0446\u0435\u043d\u0442\u0440 FOOD\u00bb",
+                    "slug": "promocode-epicentr",
+                    "chainId": "epicentr",
+                    "sortScore": 100000,
+                    "__typename": "Promotion"
+                },
+                {
+                    "id": "c828f9632a6aa0c30baeaff74aef55f5",
+                    "title": "\u0410\u043a\u0446\u0456\u044f \u00ab\u0417\u043d\u0438\u0436\u043a\u0438 \u043d\u0430 \u0434\u043e\u0441\u0442\u0430\u0432\u043a\u0443 \u0437 \u0427\u0443\u0434\u043e\u041c\u0430\u0440\u043a\u0435\u0442\u00bb",
+                    "slug": "promocode-chudomarket",
+                    "chainId": "chudomarket",
+                    "sortScore": 100000,
+                    "__typename": "Promotion"
+                },
+                {
+                    "id": "e892e619aecf85c6d7fe74d218483f3e",
+                    "title": "\u0410\u043a\u0446\u0456\u044f \u00ab\u0417\u043d\u0438\u0436\u043a\u0438 \u043d\u0430 \u0434\u043e\u0441\u0442\u0430\u0432\u043a\u0443 \u0437 \u0417\u0410 \u0420\u0410\u0417\u00bb",
+                    "slug": "promocodezaraz",
+                    "chainId": "zaraz",
+                    "sortScore": 100000,
+                    "__typename": "Promotion"
+                },
+                {
+                    "id": "61f31d6925249370079a168061138bd4",
+                    "title": "\u0410\u043a\u0446\u0456\u044f \u00ab\u0417\u043d\u0438\u0436\u043a\u0438 \u043d\u0430 \u0434\u043e\u0441\u0442\u0430\u0432\u043a\u0443 \u0437 Grono\u00bb",
+                    "slug": "promocode-grono",
+                    "chainId": "grono",
+                    "sortScore": 100000,
+                    "__typename": "Promotion"
+                },
+                {
+                    "id": "f4935dd0de9ee766501e577b2cca0eed",
+                    "title": "\u0421\u0430\u043c\u043e\u0432\u0438\u0432\u0456\u0437 \u0456\u0437 MasterZoo \u0431\u0435\u0437\u043a\u043e\u0448\u0442\u043e\u0432\u043d\u043e*",
+                    "slug": "masterzoo-samovyviz0",
+                    "chainId": "masterzoo",
+                    "sortScore": 100000,
+                    "__typename": "Promotion"
+                },
+                {
+                    "id": "060ec021789a78d83216af5a9d90d5e1",
+                    "title": "\u041a\u0443\u043f\u0443\u0439 \u0431\u0456\u043b\u044c\u0448\u0435 \u2014 \u043f\u043b\u0430\u0442\u0438 \u043c\u0435\u043d\u0448\u0435!",
+                    "slug": "idealpayless1",
+                    "chainId": "ideal",
+                    "sortScore": 100000,
+                    "__typename": "Promotion"
+                }
+            ],
+            "__typename": "PromotionsQuery"
+        }
+    }
+}
+

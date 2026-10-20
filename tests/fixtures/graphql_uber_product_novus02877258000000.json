@@ -1,0 +1,176 @@
+{
+    "data": {
+        "chains": [
+            {
+                "id": "alcohub",
+                "name": "AlcoHub",
+                "logo": "https://img01.zakaz.global/chains/alcohub/logo.svg",
+                "hostname": "alcohub.zakaz.ua",
+                "__typename": "Chain"
+            },
+            {
+                "id": "auchan",
+                "name": "Auchan",
+                "logo": "https://img01.zakaz.global/chains/auchan/logo.svg",
+                "hostname": "auchan.zakaz.ua",
+                "__typename": "Chain"
+            },
+            {
+                "id": "biotus",
+                "name": "\u0411\u0456\u043e\u0442\u0443\u0441",
+                "logo": "https://img01.zakaz.global/chains/biotus/logo.svg",
+                "hostname": "biotus.zakaz.ua",
+                "__typename": "Chain"
+            },
+            {
+                "id": "chudomarket",
+                "name": "\u0427\u0443\u0434\u043e \u041c\u0430\u0440\u043a\u0435\u0442",
+                "logo": "https://img01.zakaz.global/chains/chudomarket/logo.svg",
+                "hostname": "chudomarket.zakaz.ua",
+                "__typename": "Chain"
+            },
+            {
+                "id": "cosmos",
+                "name": "\u041a\u041e\u0421\u041c\u041e\u0421",
+                "logo": "https://img01.zakaz.global/chains/cosmos/logo.svg",
+                "hostname": "cosmos.zakaz.ua",
+                "__typename": "Chain"
+            },
+            {
+                "id": "ekomarket",
+                "name": "\u0415\u041a\u041e \u041c\u0430\u0440\u043a\u0435\u0442",
+                "logo": "https://img01.zakaz.global/chains/ekomarket/logo.svg",
+                "hostname": "eko.zakaz.ua",
+                "__typename": "Chain"
+            },
+            {
+                "id": "epicentr",
+                "name": "\u0415\u043f\u0456\u0446\u0435\u043d\u0442\u0440 FOOD",
+                "logo": "https://img01.zakaz.global/chains/epicentr/logo.svg",
+                "hostname": "epicentrfood.zakaz.ua",
+                "__typename": "Chain"
+            },
+            {
+                "id": "grono",
+                "name": "Grono",
+                "logo": "https://img01.zakaz.global/chains/grono/logo.svg",
+                "hostname": "grono.zakaz.ua",
+                "__typename": "Chain"
+            },
+            {
+                "id": "ideal",
+                "name": "\u0406\u0434\u0435\u0430\u043b",
+                "logo": "https://img01.zakaz.global/chains/ideal/logo.svg",
+                "hostname": "ideal.zakaz.ua",
+                "__typename": "Chain"
+            },
+            {
+                "id": "kharkiv",
+                "name": "C\u0443\u043f\u0435\u0440\u043c\u0430\u0440\u043a\u0435\u0442 \"\u0425\u0430\u0440\u043a\u0456\u0432\"",
+                "logo": "https://img01.zakaz.global/chains/kharkiv/logo.svg",
+                "hostname": "kharkiv.zakaz.ua",
+                "__typename": "Chain"
+            },
+            {
+                "id": "masterzoo",
+                "name": "MasterZoo",
+                "logo": "https://img01.zakaz.global/chains/masterzoo/logo.svg",
+                "hostname": "masterzoo.zakaz.ua",
+                "__typename": "Chain"
+            },
+            {
+                "id": "megamarket",
+                "name": "\u041c\u0435\u0433\u0430\u041c\u0430\u0440\u043a\u0435\u0442",
+                "logo": "https://img01.zakaz.global/logos/retailers/megamarket.svg",
+                "hostname": "megamarket.zakaz.ua",
+                "__typename": "Chain"
+            },
+            {
+                "id": "metro",
+                "name": "METRO",
+                "logo": "https://img01.zakaz.global/chains/metro/logo.svg",
+                "hostname": "metro.zakaz.ua",
+                "__typename": "Chain"
+            },
+            {
+                "id": "novus",
+                "name": "NOVUS",
+                "logo": "https://img01.zakaz.global/chains/novus/logo.svg",
+                "hostname": "novus.zakaz.ua",
+                "__typename": "Chain"
+            },
+            {
+                "id": "onde",
+                "name": "\u041e\u043dDe",
+                "logo": "https://img01.zakaz.global/chains/onde/logo.svg",
+                "hostname": "onde.zakaz.ua",
+                "__typename": "Chain"
+            },
+            {
+                "id": "tavriav",
+                "name": "\u0422\u0430\u0432\u0440\u0456\u044f \u0412",
+                "logo": "https://img01.zakaz.global/chains/tavriav/logo.svg",
+                "hostname": "tavriav.zakaz.ua",
+                "__typename": "Chain"
+            },
+            {
+                "id": "torba",
+                "name": "\u0422\u043e\u0440\u0431\u0430",
+                "logo": "https://img01.zakaz.global/chains/torba/logo.svg",
+                "hostname": "torba.zakaz.ua",
+                "__typename": "Chain"
+            },
+            {
+                "id": "ultramarket",
+                "name": "ULTRAMARKET",
+                "logo": "https://img01.zakaz.global/chains/ultramarket/logo.svg",
+                "hostname": "ultramarket.zakaz.ua",
+                "__typename": "Chain"
+            },
+            {
+                "id": "vostorg",
+                "name": "\u0412\u043e\u0441\u0442\u043e\u0440\u0433",
+                "logo": "https://img01.zakaz.global/chains/vostorg/logo.svg",
+                "hostname": "vostorg.zakaz.ua",
+                "__typename": "Chain"
+            },
+            {
+                "id": "winetime",
+                "name": "WINETIME",
+                "logo": "https://img01.zakaz.global/chains/winetime/logo.svg?v=1",
+                "hostname": "winetime.zakaz.ua",
+                "__typename": "Chain"
+            },
+            {
+                "id": "zaraz",
+                "name": "\u0417\u0430 \u0420\u0430\u0437",
+                "logo": "https://img01.zakaz.global/chains/zaraz/logo.svg",
+                "hostname": "zaraz.zakaz.ua",
+                "__typename": "Chain"
+            }
+        ],
+        "uberProducts": {
+            "details": {
+                "mainEan": "novus02877258000000",
+                "presentInChains": [
+                    "novus"
+                ],
+                "stores": [
+                    {
+                        "chainId": "novus",
+                        "storeId": "48201031",
+                        "available": true,
+                        "price": 19900,
+                        "fullPrice": 26900,
+                        "discountPercent": 26,
+                        "discountDateTo": "2026-10-28",
+                        "ean": "novus02877258000000",
+                        "__typename": "UberProductStore"
+                    }
+                ],
+                "__typename": "UberProductDetails"
+            },
+            "__typename": "UberProductsQuery"
+        }
+    }
+}
