@@ -31,3 +31,23 @@ def parse_weight(text: str | None) -> tuple[str, float | None, str | None]:
         return "pack", int(qty) if qty.is_integer() else qty, m.group(2)
     log.warning("Нерозпізнана вага/одиниця: %r", text)
     return "unknown", None, None
+
+
+_UNTIL = re.compile(r"до\s+(\d{1,2})\.(\d{1,2})")
+
+
+def until_to_date(text: str | None, snapshot_date) -> str | None:
+    """'до 28.10' + дата знімка -> ISO-дата з роком знімка; якщо вона раніша за знімок більш ніж на 30 днів,
+    рік +1. Некоректна дата -> None (сирий текст зберігається окремо)."""
+    from datetime import date, timedelta
+    m = _UNTIL.search(text or "")
+    if not m:
+        return None
+    day, month = int(m.group(1)), int(m.group(2))
+    try:
+        d = date(snapshot_date.year, month, day)
+        if d < snapshot_date - timedelta(days=30):
+            d = date(snapshot_date.year + 1, month, day)
+    except ValueError:
+        return None
+    return d.isoformat()

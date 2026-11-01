@@ -27,3 +27,6 @@ zakaz_fish_spec.zip
 
 graphql_*_responce.json
 tests/fixtures/live/
+
+.gitignore
+test.ipynb

@@ -108,6 +108,36 @@ def cmd_sample(args, cfg) -> int:
     return 0
 
 
+def cmd_snapshot(args, cfg) -> int:
+    from . import snapshot as sn, tasks
+    conn = _open(cfg)
+    act = args.action
+    if act == "create":
+        sid = sn.create_snapshot(conn, cfg, args.id)
+        print(f"Знімок {sid} створено. Задач: {sum(sum(c.values()) for c in tasks.counts(conn, sid).values())}")
+        return 0
+    if act == "run":
+        stages = args.stages.split(",") if args.stages else None
+        return sn.run_snapshot(conn, cfg, args.id, max_requests=args.max_requests, stages=stages)
+    sid = args.id or (conn.execute("SELECT snapshot_id FROM snapshots ORDER BY created_at DESC LIMIT 1").fetchone() or [None])[0]
+    if act == "status":
+        print(sn.format_status(sn.build_status(conn, sid)))
+        return 0
+    if act == "retry-failed":
+        n = tasks.retry_failed(conn, sid)
+        conn.commit()
+        print(f"Повернуто в чергу: {n}")
+        return 0
+    if act == "backup":
+        print(sn.backup_db(conn, cfg))
+        return 0
+    if act == "export":
+        from .package import export_package
+        print(export_package(conn, cfg, sid))
+        return 0
+    return 1
+
+
 def cmd_export(args, cfg) -> int:
     for path in export_all(_open(cfg), cfg.out_dir):
         print(path)
@@ -136,6 +166,12 @@ def build_parser() -> argparse.ArgumentParser:
     sm.add_argument("--preset", default="v2")
     sm.add_argument("--add", action="append", metavar="NAME=URL")
     sm.set_defaults(func=cmd_sample)
+    sn = sub.add_parser("snapshot")
+    sn.add_argument("action", choices=["create", "run", "status", "retry-failed", "export", "backup"])
+    sn.add_argument("--id", default=None)
+    sn.add_argument("--max-requests", type=int, default=None)
+    sn.add_argument("--stages", default=None, help="напр. product_detail або city_listing,chain_listing")
+    sn.set_defaults(func=cmd_snapshot)
     sub.add_parser("export").set_defaults(func=cmd_export)
     sub.add_parser("stats").set_defaults(func=cmd_stats)
 

@@ -48,6 +48,11 @@ FIELDS = [
     ("products", "is_active", "1 = товар був у списках під час останнього повного збору; 0 = зник."),
     ("products", "details_scraped_at", "Коли завантажили сторінку товару з характеристиками (UTC). Порожнє, якщо ще не завантажували."),
     ("products", "details_status", "Результат завантаження сторінки товару: ok, empty (сторінка без даних), not_found (404), error."),
+    ("products", "meta_description", "Текст meta description сторінки товару (містить перелік мереж і діапазон цін для контексту за замовчуванням)."),
+    ("products", "meta_price_min_kop", "Мінімальна ціна з meta description, копійки. Це діапазон по всіх магазинах, які бачить сайт, не по місту."),
+    ("products", "meta_price_max_kop", "Максимальна ціна з meta description, копійки."),
+    ("products", "meta_chain_names", "JSON-масив назв мереж, де товар є за meta description (як написано на сайті)."),
+    ("products", "first_source", "Де товар уперше побачили: aggregator (каталог міста) або storefront (лише вітрина мережі)."),
     # listing_prices_latest
     ("listing_prices_latest", "run_id", "Ідентифікатор запуску збору (дата-час UTC), з якого цей знімок цін."),
     ("listing_prices_latest", "product_id", "Товар, зв'язок із products.product_id."),
@@ -64,6 +69,7 @@ FIELDS = [
     ("categories", "name", "Назва категорії українською, як на сайті."),
     ("categories", "level", "Рівень у дереві: 1 верхній, 2 підкатегорія, 3 підпідкатегорія."),
     ("categories", "parent_slug", "slug батьківської категорії."),
+    ("categories", "scope", "Розділ знімка: core, canned, snacks, frozen, semi. Порожній, якщо категорію знайдено лише на сторінках товарів."),
     # chains
     ("chains", "chain_id", "Ідентифікатор мережі на zakaz.ua (novus, auchan, metro…), ключ. Збігається з префіксом product_id товарів мережі."),
     ("chains", "name", "Назва мережі."),
