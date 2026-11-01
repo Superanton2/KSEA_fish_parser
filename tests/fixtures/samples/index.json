@@ -1,0 +1,276 @@
+{
+  "requests": 3,
+  "stopped": null,
+  "entries": [
+    {
+      "name": "robots_novus.zakaz.ua",
+      "url": "https://novus.zakaz.ua/robots.txt",
+      "fetched_at": "2026-11-01T19:50:32+00:00",
+      "status": 200,
+      "final_url": "https://novus.zakaz.ua/robots.txt",
+      "bytes": 1607,
+      "file": "tests/fixtures/robots/novus.zakaz.ua.robots.txt"
+    },
+    {
+      "name": "robots_metro.zakaz.ua",
+      "url": "https://metro.zakaz.ua/robots.txt",
+      "fetched_at": "2026-11-01T19:50:34+00:00",
+      "status": 200,
+      "final_url": "https://metro.zakaz.ua/robots.txt",
+      "bytes": 1607,
+      "file": "tests/fixtures/robots/metro.zakaz.ua.robots.txt"
+    },
+    {
+      "name": "robots_tavriav.zakaz.ua",
+      "url": "https://tavriav.zakaz.ua/robots.txt",
+      "fetched_at": "2026-11-01T19:50:36+00:00",
+      "status": 200,
+      "final_url": "https://tavriav.zakaz.ua/robots.txt",
+      "bytes": 1611,
+      "file": "tests/fixtures/robots/tavriav.zakaz.ua.robots.txt"
+    },
+    {
+      "name": "robots_stores-api.zakaz.ua",
+      "url": "https://stores-api.zakaz.ua/robots.txt",
+      "fetched_at": "2026-11-01T19:50:41+00:00",
+      "status": 200,
+      "final_url": "https://stores-api.zakaz.ua/robots.txt",
+      "bytes": 25,
+      "file": "tests/fixtures/robots/stores-api.zakaz.ua.robots.txt"
+    },
+    {
+      "name": "agg_kyiv_canned_p1",
+      "url": "https://zakaz.ua/uk/kyiv/canned-fish-zakaz/",
+      "fetched_at": "2026-11-01T19:50:43+00:00",
+      "status": 200,
+      "final_url": "https://zakaz.ua/uk/kyiv/canned-fish-zakaz/",
+      "bytes": 1077853,
+      "file": "tests/fixtures/samples/agg_kyiv_canned_p1.html"
+    },
+    {
+      "name": "agg_kyiv_tuna_p1",
+      "url": "https://zakaz.ua/uk/kyiv/tuna-zakaz/",
+      "fetched_at": "2026-11-01T19:50:48+00:00",
+      "status": 200,
+      "final_url": "https://zakaz.ua/uk/kyiv/tuna-zakaz/",
+      "bytes": 1066174,
+      "file": "tests/fixtures/samples/agg_kyiv_tuna_p1.html"
+    },
+    {
+      "name": "agg_kyiv_snacks_p1",
+      "url": "https://zakaz.ua/uk/kyiv/packed-fish-snacks-zakaz/",
+      "fetched_at": "2026-11-01T19:50:53+00:00",
+      "status": 200,
+      "final_url": "https://zakaz.ua/uk/kyiv/packed-fish-snacks-zakaz/",
+      "bytes": 1064548,
+      "file": "tests/fixtures/samples/agg_kyiv_snacks_p1.html"
+    },
+    {
+      "name": "agg_kyiv_frozen_p1",
+      "url": "https://zakaz.ua/uk/kyiv/frozen-fish-and-seafood-zakaz/",
+      "fetched_at": "2026-11-01T19:50:57+00:00",
+      "status": 200,
+      "final_url": "https://zakaz.ua/uk/kyiv/frozen-fish-and-seafood-zakaz/",
+      "bytes": 1071922,
+      "file": "tests/fixtures/samples/agg_kyiv_frozen_p1.html"
+    },
+    {
+      "name": "agg_kyiv_semi_p1",
+      "url": "https://zakaz.ua/uk/kyiv/half-made-food-zakaz/",
+      "fetched_at": "2026-11-01T19:51:01+00:00",
+      "status": 200,
+      "final_url": "https://zakaz.ua/uk/kyiv/half-made-food-zakaz/",
+      "bytes": 1099275,
+      "file": "tests/fixtures/samples/agg_kyiv_semi_p1.html"
+    },
+    {
+      "name": "agg_if_fish_p1",
+      "url": "https://zakaz.ua/uk/ivano-frankivsk/fish-and-seafood-zakaz/",
+      "fetched_at": "2026-11-01T19:51:04+00:00",
+      "status": 200,
+      "final_url": "https://zakaz.ua/uk/ivano-frankivsk/fish-and-seafood-zakaz/",
+      "bytes": 1079700,
+      "file": "tests/fixtures/samples/agg_if_fish_p1.html"
+    },
+    {
+      "name": "agg_if_caviar_p1",
+      "url": "https://zakaz.ua/uk/ivano-frankivsk/caviar-zakaz/",
+      "fetched_at": "2026-11-01T19:51:08+00:00",
+      "status": 200,
+      "final_url": "https://zakaz.ua/uk/ivano-frankivsk/caviar-zakaz/",
+      "bytes": 918028,
+      "file": "tests/fixtures/samples/agg_if_caviar_p1.html"
+    },
+    {
+      "name": "agg_lviv_fish_p2",
+      "url": "https://zakaz.ua/uk/lviv/fish-and-seafood-zakaz/?page=2",
+      "fetched_at": "2026-11-01T19:51:12+00:00",
+      "status": 200,
+      "final_url": "https://zakaz.ua/uk/lviv/fish-and-seafood-zakaz/?page=2",
+      "bytes": 1097019,
+      "file": "tests/fixtures/samples/agg_lviv_fish_p2.html"
+    },
+    {
+      "name": "prod_trout_norven",
+      "url": "https://zakaz.ua/uk/products/file-forel-norven-180g--04820185100281/",
+      "fetched_at": "2026-11-01T19:51:16+00:00",
+      "status": 200,
+      "final_url": "https://zakaz.ua/uk/products/file-forel-norven-180g--04820185100281/",
+      "bytes": 1096035,
+      "file": "tests/fixtures/samples/prod_trout_norven.html"
+    },
+    {
+      "name": "prod_cod_liver_novus",
+      "url": "https://zakaz.ua/uk/products/pechinka-triski-novus-121g--04823088800906/",
+      "fetched_at": "2026-11-01T19:51:18+00:00",
+      "status": 200,
+      "final_url": "https://zakaz.ua/uk/products/pechinka-triski-novus-121g--04823088800906/",
+      "bytes": 1083934,
+      "file": "tests/fixtures/samples/prod_cod_liver_novus.html"
+    },
+    {
+      "name": "novus_stores_p1",
+      "url": "https://novus.zakaz.ua/uk/stores/",
+      "fetched_at": "2026-11-01T19:51:21+00:00",
+      "status": 200,
+      "final_url": "https://novus.zakaz.ua/uk/stores/",
+      "bytes": 359453,
+      "file": "tests/fixtures/samples/novus_stores_p1.html"
+    },
+    {
+      "name": "novus_store_detail",
+      "url": "https://novus.zakaz.ua/uk/stores/kyiv/vul-soborna-2/",
+      "fetched_at": "2026-11-01T19:51:23+00:00",
+      "status": 200,
+      "final_url": "https://novus.zakaz.ua/uk/stores/kyiv/vul-soborna-2/",
+      "bytes": 370669,
+      "file": "tests/fixtures/samples/novus_store_detail.html"
+    },
+    {
+      "name": "metro_stores_p1",
+      "url": "https://metro.zakaz.ua/uk/stores/",
+      "fetched_at": "2026-11-01T19:51:30+00:00",
+      "status": 200,
+      "final_url": "https://metro.zakaz.ua/uk/stores/",
+      "bytes": 340172,
+      "file": "tests/fixtures/samples/metro_stores_p1.html"
+    },
+    {
+      "name": "tavriav_stores_p1",
+      "url": "https://tavriav.zakaz.ua/uk/stores/",
+      "fetched_at": "2026-11-01T19:51:33+00:00",
+      "status": 200,
+      "final_url": "https://tavriav.zakaz.ua/uk/stores/",
+      "bytes": 353270,
+      "file": "tests/fixtures/samples/tavriav_stores_p1.html"
+    },
+    {
+      "name": "novus_home",
+      "url": "https://novus.zakaz.ua/uk/",
+      "fetched_at": "2026-11-01T19:51:39+00:00",
+      "status": 200,
+      "final_url": "https://novus.zakaz.ua/uk/",
+      "bytes": 540021,
+      "file": "tests/fixtures/samples/novus_home.html"
+    },
+    {
+      "name": "novus_fish_p1",
+      "url": "https://novus.zakaz.ua/uk/categories/fish-and-seafood-novus/",
+      "fetched_at": "2026-11-01T19:51:42+00:00",
+      "status": 200,
+      "final_url": "https://novus.zakaz.ua/uk/categories/fish-and-seafood-novus/",
+      "bytes": 1046300,
+      "file": "tests/fixtures/samples/novus_fish_p1.html"
+    },
+    {
+      "name": "novus_fish_p2",
+      "url": "https://novus.zakaz.ua/uk/categories/fish-and-seafood-novus/?page=2",
+      "fetched_at": "2026-11-01T19:51:46+00:00",
+      "status": 200,
+      "final_url": "https://novus.zakaz.ua/uk/categories/fish-and-seafood-novus/?page=2",
+      "bytes": 1044236,
+      "file": "tests/fixtures/samples/novus_fish_p2.html"
+    },
+    {
+      "name": "novus_canned_p1",
+      "url": "https://novus.zakaz.ua/uk/categories/tins-jars-cooking/",
+      "fetched_at": "2026-11-01T19:51:49+00:00",
+      "status": 200,
+      "final_url": "https://novus.zakaz.ua/uk/categories/tins-jars-cooking/",
+      "bytes": 1249129,
+      "file": "tests/fixtures/samples/novus_canned_p1.html"
+    },
+    {
+      "name": "metro_home",
+      "url": "https://metro.zakaz.ua/uk/",
+      "fetched_at": "2026-11-01T19:51:53+00:00",
+      "status": 200,
+      "final_url": "https://metro.zakaz.ua/uk/",
+      "bytes": 574577,
+      "file": "tests/fixtures/samples/metro_home.html"
+    },
+    {
+      "name": "metro_fish_p1",
+      "url": "https://metro.zakaz.ua/uk/categories/fish-and-seafood-metro/",
+      "fetched_at": "2026-11-01T19:51:55+00:00",
+      "status": 200,
+      "final_url": "https://metro.zakaz.ua/uk/categories/fish-and-seafood-metro/",
+      "bytes": 964580,
+      "file": "tests/fixtures/samples/metro_fish_p1.html"
+    },
+    {
+      "name": "tavriav_home",
+      "url": "https://tavriav.zakaz.ua/uk/",
+      "fetched_at": "2026-11-01T19:51:58+00:00",
+      "status": 200,
+      "final_url": "https://tavriav.zakaz.ua/uk/",
+      "bytes": 504398,
+      "file": "tests/fixtures/samples/tavriav_home.html"
+    },
+    {
+      "name": "tavriav_fish_p1",
+      "url": "https://tavriav.zakaz.ua/uk/categories/fish-and-seafood-tavriav/",
+      "fetched_at": "2026-11-01T19:52:01+00:00",
+      "status": 200,
+      "final_url": "https://tavriav.zakaz.ua/uk/categories/fish-and-seafood-tavriav/",
+      "bytes": 874757,
+      "file": "tests/fixtures/samples/tavriav_fish_p1.html"
+    },
+    {
+      "name": "prod_from_storefront_path",
+      "url": "https://zakaz.ua/uk/products/file-forel-norven-180g--04820185100281/",
+      "fetched_at": "2026-11-01T19:52:05+00:00",
+      "status": 200,
+      "final_url": "https://zakaz.ua/uk/products/file-forel-norven-180g--04820185100281/",
+      "bytes": 1094469,
+      "file": "tests/fixtures/samples/prod_from_storefront_path.html"
+    },
+    {
+      "name": "robots_zakaz.ua",
+      "url": "https://zakaz.ua/robots.txt",
+      "fetched_at": "2026-11-01T19:53:47+00:00",
+      "status": 200,
+      "final_url": "https://zakaz.ua/robots.txt",
+      "bytes": 1475,
+      "file": "tests/fixtures/robots/zakaz.ua.robots.txt"
+    },
+    {
+      "name": "agg_if_fresh_fish_p1",
+      "url": "https://zakaz.ua/uk/ivano-frankivsk/fresh-fish-zakaz/",
+      "fetched_at": "2026-11-01T19:53:49+00:00",
+      "status": 200,
+      "final_url": "https://zakaz.ua/uk/ivano-frankivsk/fresh-fish-zakaz/",
+      "bytes": 892915,
+      "file": "tests/fixtures/samples/agg_if_fresh_fish_p1.html"
+    },
+    {
+      "name": "agg_poltava_snacks_p1",
+      "url": "https://zakaz.ua/uk/poltava/packed-fish-snacks-zakaz/",
+      "fetched_at": "2026-11-01T19:53:56+00:00",
+      "status": 200,
+      "final_url": "https://zakaz.ua/uk/poltava/packed-fish-snacks-zakaz/",
+      "bytes": 1029095,
+      "file": "tests/fixtures/samples/agg_poltava_snacks_p1.html"
+    }
+  ]
+}

@@ -1,0 +1,121 @@
+User-Agent: *
+Allow: /*.css
+Allow: /*.js
+Allow: /*.jpg
+Allow: /*.gif
+Allow: /*.png
+Allow: /llms.txt
+Allow: /okf/
+
+User-Agent: ia_archiver
+Disallow: /
+
+User-Agent: magpie-crawler
+Disallow: /
+
+User-Agent: UbiCrawler
+Disallow: /
+
+User-Agent: DOC
+Disallow: /
+
+User-Agent: Zao
+Disallow: /
+
+User-Agent: sitecheck.internetseer.com
+Disallow: /
+
+User-Agent: Zealbot
+Disallow: /
+
+User-Agent: MSIECrawler
+Disallow: /
+
+User-Agent: SiteSnagger
+Disallow: /
+
+User-Agent: WebStripper
+Disallow: /
+
+User-Agent: WebCopier
+Disallow: /
+
+User-Agent: Fetch
+Disallow: /
+
+User-Agent: Offline Explorer
+Disallow: /
+
+User-Agent: Teleport
+Disallow: /
+
+User-Agent: TeleportPro
+Disallow: /
+
+User-Agent: WebZIP
+Disallow: /
+
+User-Agent: linko
+Disallow: /
+
+User-Agent: HTTrack
+Disallow: /
+
+User-Agent: Microsoft.URL.Control
+Disallow: /
+
+User-Agent: Xenu
+Disallow: /
+
+User-Agent: larbin
+Disallow: /
+
+User-Agent: libwww
+Disallow: /
+
+User-Agent: ZyBORG
+Disallow: /
+
+User-Agent: Download Ninja
+Disallow: /
+
+User-Agent: fast
+Disallow: /
+
+User-Agent: wget
+Disallow: /
+
+User-Agent: grub-client
+Disallow: /
+
+User-Agent: k2spider
+Disallow: /
+
+User-Agent: NPBot
+Disallow: /
+
+User-Agent: WebReaper
+Disallow: /
+
+User-Agent: oodlebot/1.0
+Disallow: /
+
+User-Agent: oodlebot
+Disallow: /
+
+User-Agent: Web Link Validator
+Disallow: /
+
+User-Agent: majestic
+Disallow: /
+
+User-Agent: ShopWiki
+Disallow: /
+
+User-Agent: Meta-ExternalAgent
+Disallow: /
+
+User-Agent: Meta-ExternalFetcher
+Allow: /
+
+Sitemap: https://zakaz.ua/sitemap.xml

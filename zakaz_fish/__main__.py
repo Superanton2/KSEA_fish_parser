@@ -91,6 +91,23 @@ def cmd_daily(args, cfg) -> int:
     return _run_crawl(args, cfg, lambda conn, f: crawl.crawl_daily(conn, f, cfg))
 
 
+def cmd_sample(args, cfg) -> int:
+    from .sample import run_sample
+    extra = []
+    for item in args.add or []:
+        name, _, url = item.partition("=")
+        extra.append((name, url))
+    with Fetcher(cfg) as fetcher:
+        s = run_sample(cfg, fetcher, args.preset, extra)
+    for e in s.entries:
+        print(e["name"], e.get("status", ""), e.get("location", ""), e.get("skipped", e.get("error", "")))
+    print(f"Запитів: {fetcher.requests}; індекс: tests/fixtures/samples/index.json")
+    if s.stopped:
+        print(f"ЗУПИНЕНО: {s.stopped}", file=sys.stderr)
+        return 2
+    return 0
+
+
 def cmd_export(args, cfg) -> int:
     for path in export_all(_open(cfg), cfg.out_dir):
         print(path)
@@ -115,6 +132,10 @@ def build_parser() -> argparse.ArgumentParser:
     s.set_defaults(func=cmd_seed)
 
     sub.add_parser("smoke-check").set_defaults(func=cmd_smoke)
+    sm = sub.add_parser("sample")
+    sm.add_argument("--preset", default="v2")
+    sm.add_argument("--add", action="append", metavar="NAME=URL")
+    sm.set_defaults(func=cmd_sample)
     sub.add_parser("export").set_defaults(func=cmd_export)
     sub.add_parser("stats").set_defaults(func=cmd_stats)
 

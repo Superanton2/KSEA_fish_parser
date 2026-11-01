@@ -4,11 +4,16 @@ import random
 import time
 from pathlib import Path
 
+from urllib.parse import urlsplit
+
 import httpx
 
 from .config import Config
 
 log = logging.getLogger(__name__)
+
+# robots.txt: User-agent * / Disallow: / (перевірено 01.11.2026); читати можна лише сам /robots.txt
+BLOCKED_HOSTS = {"stores-api.zakaz.ua"}
 
 STOP_STATUSES = {403, 429, 503}
 RETRY_STATUSES = {500, 502, 504}
@@ -78,6 +83,36 @@ class Fetcher:
     def elapsed_s(self) -> float:
         return time.monotonic() - self._started
 
+    def _prepare(self, url: str) -> None:
+        """Перед кожним запитом: заборонені хости, порожній cookie jar (контекст лише з URL)."""
+        parts = urlsplit(url)
+        if parts.hostname in BLOCKED_HOSTS and parts.path != "/robots.txt":
+            raise FetchError(f"Хост {parts.hostname} заборонений (robots.txt): {url}")
+        self.client.cookies.clear()
+
+    def fetch_response(self, url: str, *, follow_redirects: bool = False) -> httpx.Response:
+        """Один запит (без повторів) з паузою; повертає відповідь як є, зокрема 3xx/4xx/5xx.
+
+        Піднімає StopCrawl на 403/429/503 і сторінках перевірки Cloudflare. Для `sample`.
+        """
+        self._prepare(url)
+        self._sleep(random.uniform(self.cfg.delay_min_s, self.cfg.delay_max_s))
+        self.requests += 1
+        try:
+            resp = self.client.get(url, follow_redirects=follow_redirects)
+        except httpx.HTTPError as e:
+            raise FetchError(f"{type(e).__name__}: {e} для {url}") from e
+        body = resp.text
+        if resp.status_code in STOP_STATUSES:
+            raise StopCrawl(f"HTTP {resp.status_code} для {url}", body)
+        checked = body
+        for snippet in BENIGN_SNIPPETS:
+            checked = checked.replace(snippet, "")
+        for marker in STOP_MARKERS:
+            if marker in checked:
+                raise StopCrawl(f"Сторінка перевірки Cloudflare ({marker!r}) для {url}", body)
+        return resp
+
     def get(self, url: str, raw_name: str | None = None, *, follow_redirects: bool = True) -> str:
         """GET з паузою, повторами й аварійною зупинкою. Успішну відповідь зберігає в raw/ (gzip).
 
@@ -85,6 +120,7 @@ class Fetcher:
         """
         last_error = "невідома помилка"
         for attempt in range(len(RETRY_PAUSES_S) + 1):
+            self._prepare(url)
             self._sleep(random.uniform(self.cfg.delay_min_s, self.cfg.delay_max_s))
             self.requests += 1
             try:

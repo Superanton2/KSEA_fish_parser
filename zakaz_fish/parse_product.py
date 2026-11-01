@@ -4,6 +4,8 @@ from decimal import Decimal, InvalidOperation
 
 from bs4 import BeautifulSoup
 
+from .prices import price_to_kop
+
 # Taxon-ключ -> колонка products
 ATTR_TO_COLUMN = {
     "tm": "brand",
@@ -26,6 +28,10 @@ class ProductDetails:
     fat: float | None = None
     carbs: float | None = None
     description: str | None = None
+    meta_description: str | None = None
+    meta_price_min_kop: int | None = None
+    meta_price_max_kop: int | None = None
+    meta_chain_names: list[str] = field(default_factory=list)
 
     @property
     def is_empty(self) -> bool:
@@ -53,9 +59,32 @@ def _number(text: str | None) -> float | None:
         return None
 
 
+META_CHAINS_RE = re.compile(r"з доставкою із супермаркетів\s+(.+?)\.\s+Порівняйте ціни", re.S)
+META_PRICES_RE = re.compile(r"ціни від\s+([\d\s.,]+?)\s+до\s+([\d\s.,]+?)\s+і виберіть")
+
+
+def parse_meta(soup) -> tuple[str | None, int | None, int | None, list[str]]:
+    """meta description: 'Купити <назва> з доставкою із супермаркетів A, B, "C". Порівняйте ціни від X до Y і ...'.
+    Назви мереж містять коми лише всередині лапок (напр. Cупермаркет "Харків"), тож ділимо по ', '."""
+    tag = soup.select_one('meta[name="description"]')
+    text = tag.get("content") if tag else None
+    if not text:
+        return None, None, None, []
+    chains = []
+    m = META_CHAINS_RE.search(text)
+    if m:
+        chains = [c.strip() for c in m.group(1).split(", ") if c.strip()]
+    lo = hi = None
+    m = META_PRICES_RE.search(text)
+    if m:
+        lo, hi = price_to_kop(m.group(1)), price_to_kop(m.group(2))
+    return text, lo, hi, chains
+
+
 def parse_product(html: str, store_description: bool = False) -> ProductDetails:
     soup = BeautifulSoup(html, "lxml")
     d = ProductDetails(title=_text(soup.select_one("h1")))
+    d.meta_description, d.meta_price_min_kop, d.meta_price_max_kop, d.meta_chain_names = parse_meta(soup)
 
     for a in soup.select('a[data-marker^="Breadcrumb Category"]'):
         level = int(a["data-marker"].rsplit(" ", 1)[-1])

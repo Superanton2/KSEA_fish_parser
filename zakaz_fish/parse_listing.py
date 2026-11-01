@@ -22,6 +22,7 @@ class Tile:
     is_promo: bool
     image_url: str | None
     position: int
+    in_stock: bool = True  # False: плитка «Немає в наявності» (без ціни)
 
 
 @dataclass
@@ -29,6 +30,10 @@ class ListingPage:
     total: int | None
     tiles: list[Tile] = field(default_factory=list)
     subcategories: list[str] = field(default_factory=list)
+    h1: str | None = None
+    city_name: str | None = None  # з H1 «<Категорія> у місті <Місто>»
+    tags_all_slug: str | None = None  # посилання «Усі» у блоці CategoriesTags (категорія, чиї це підрозділи)
+
 
 
 def _text(node) -> str | None:
@@ -39,7 +44,12 @@ def _category_slug(href: str) -> str:
     return href.rstrip("/").rsplit("/", 1)[-1]
 
 
-def parse_listing(html: str) -> ListingPage:
+CITY_RE = re.compile(r"\s+у місті\s+(.+)$")
+
+
+def parse_listing(html: str, category_slug: str | None = None) -> ListingPage:
+    """category_slug: поточна категорія. Теги `CategoriesTags` вважаються підрозділами, лише якщо їхнє
+    посилання «Усі» веде на неї (інакше це сусідні категорії батька, напр. у «Рибних снеках»)."""
     soup = BeautifulSoup(html, "lxml")
 
     total = None
@@ -70,7 +80,22 @@ def parse_listing(html: str) -> ListingPage:
             is_promo=a.select_one('[data-marker="Offer"]') is not None,
             image_url=urljoin(BASE_URL, img["src"]) if img else None,
             position=len(tiles) + 1,
+            in_stock=price_min is not None or "Немає в наявності" not in a.get_text(),
         ))
 
     subcategories = [_category_slug(a["href"]) for a in soup.select(".CategoriesSlider__item a[href]")]
-    return ListingPage(total=total, tiles=tiles, subcategories=subcategories)
+    all_slug = None
+    tags = []
+    for a in soup.select('[data-marker="Categories"] .CategoriesTags__item a[href]'):
+        slug = _category_slug(a["href"])
+        if a.get_text(strip=True) == "Усі":
+            all_slug = slug
+        else:
+            tags.append(slug)
+    if all_slug and all_slug == category_slug:
+        subcategories += [t for t in tags if t not in subcategories]
+
+    h1 = " ".join(soup.h1.get_text(" ", strip=True).split()) if soup.h1 else None
+    m = CITY_RE.search(h1 or "")
+    return ListingPage(total=total, tiles=tiles, subcategories=subcategories, h1=h1,
+                       city_name=m.group(1) if m else None, tags_all_slug=all_slug)

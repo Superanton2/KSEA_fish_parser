@@ -1,0 +1,128 @@
+User-agent: *
+Allow: /*.css
+Allow: /*.js
+Allow: /*.jpg
+Allow: /*.gif
+Allow: /*.png
+Allow: /llms.txt
+Allow: /okf/
+
+User-agent: ia_archiver
+Disallow: /
+
+User-agent: magpie-crawler
+Disallow: /
+
+User-agent: UbiCrawler
+Disallow: /
+
+User-agent: DOC
+Disallow: /
+
+User-agent: Zao
+Disallow: /
+
+User-agent: sitecheck.internetseer.com
+Disallow: /
+
+User-agent: Zealbot
+Disallow: /
+
+User-agent: MSIECrawler
+Disallow: /
+
+User-agent: SiteSnagger
+Disallow: /
+
+User-agent: WebStripper
+Disallow: /
+
+User-agent: WebCopier
+Disallow: /
+
+User-agent: Fetch
+Disallow: /
+
+User-agent: Offline Explorer
+Disallow: /
+
+User-agent: Teleport
+Disallow: /
+
+User-agent: TeleportPro
+Disallow: /
+
+User-agent: WebZIP
+Disallow: /
+
+User-agent: linko
+Disallow: /
+
+User-agent: HTTrack
+Disallow: /
+
+User-agent: Microsoft.URL.Control
+Disallow: /
+
+User-agent: Xenu
+Disallow: /
+
+User-agent: larbin
+Disallow: /
+
+User-agent: libwww
+Disallow: /
+
+User-agent: ZyBORG
+Disallow: /
+
+User-agent: Download Ninja
+Disallow: /
+
+User-agent: fast
+Disallow: /
+
+User-agent: wget
+Disallow: /
+
+User-agent: grub-client
+Disallow: /
+
+User-agent: k2spider
+Disallow: /
+
+User-agent: NPBot
+Disallow: /
+
+User-agent: WebReaper
+Disallow: /
+
+User-agent: oodlebot/1.0
+Disallow: /
+
+User-agent: oodlebot
+Disallow: /
+
+User-agent: Web Link Validator
+Disallow: /
+
+User-agent: majestic
+Disallow: /
+
+User-agent: ShopWiki
+Disallow: /
+
+# Bulk AI crawler / training
+User-agent: Meta-ExternalAgent
+Disallow: /
+
+# User-initiated retrieval
+User-agent: Meta-ExternalFetcher
+Allow: /
+
+User-agent: *
+Disallow: /n/
+
+Sitemap: https://novus.zakaz.ua/sitemap.xml
+
+Sitemap: https://novus.zakaz.ua/llms.txt
