@@ -9,5 +9,5 @@ class StorePriceSource:
         # передається список магазинів (змінні чи заголовки X-Store-Ids / X-Chain-Ids /
         # X-Delivery-Type) і чи працює запит без cookie. Парсер відповіді: parse_graphql.parse_uber_product.
         raise NotImplementedError(
-            "TODO(unverified): запити до stores-api.zakaz.ua/graphql не реалізовано; "
-            "невідомі повний запит uberProducts, спосіб передачі магазинів і потреба в cookie")
+            "TODO(unverified): robots.txt API забороняє доступ (stores-api.zakaz.ua: Disallow: /); "
+            "лише з письмового дозволу zakaz.ua")

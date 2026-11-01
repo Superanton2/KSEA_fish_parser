@@ -1,0 +1,29 @@
+# Пілот на Mac: 3 малі міста, 2 мережі, до 20 сторінок магазинів (~500-700 запитів, ~30 хв).
+lang = "uk"
+db_path = "data/pilot.sqlite"
+raw_dir = "data/pilot_raw"
+out_dir = "data/pilot_out"
+timeout_s = 30
+max_pages_per_category = 100
+user_agent = "KSEA-FishMarketResearch/0.2"
+contact_email = ""                 # впишіть свою пошту
+store_descriptions = false
+
+[snapshot]
+cities = ["ivano-frankivsk", "kryvyi-rih", "poltava"]
+city_probes = false
+baseline_cities = ["ivano-frankivsk", "kryvyi-rih"]
+scopes = ["core", "canned", "snacks", "frozen", "semi"]
+chains_only = ["novus", "metro"]
+max_store_details = 20
+details_max_age_days = 30
+
+[snapshot.scope_roots]
+core = "fish-and-seafood-zakaz"
+canned = "canned-fish-zakaz"
+snacks = "packed-fish-snacks-zakaz"
+frozen = "frozen-fish-and-seafood-zakaz"
+semi = "half-made-food-zakaz"
+
+[snapshot.scope_filters]
+semi = "fish_keywords"

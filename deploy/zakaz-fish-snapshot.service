@@ -1,0 +1,18 @@
+[Unit]
+Description=zakaz.ua fish snapshot crawler
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=zakaz
+WorkingDirectory=/opt/zakaz_fish/app
+ExecStart=/opt/zakaz_fish/app/.venv/bin/python -m zakaz_fish --config config.toml snapshot run
+Environment=PYTHONUNBUFFERED=1
+Restart=on-failure
+RestartSec=900
+# 2 блокування, 3 запобіжник/429/неочікувані сторінки, 4 robots: сигнал для людини, без автоперезапуску
+RestartPreventExitStatus=2 3 4
+
+[Install]
+WantedBy=multi-user.target

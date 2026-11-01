@@ -195,6 +195,13 @@ def main(argv=None) -> int:
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
     args = build_parser().parse_args(argv)
     cfg = load_config(args.config)
+    if args.command in ("snapshot", "sample"):
+        from logging.handlers import RotatingFileHandler
+        log_dir = cfg.data_dir / "logs"
+        log_dir.mkdir(parents=True, exist_ok=True)
+        fh = RotatingFileHandler(log_dir / "zakaz_fish.log", maxBytes=10 * 1024 * 1024, backupCount=5, encoding="utf-8")
+        fh.setFormatter(logging.Formatter("%(asctime)s %(levelname)s %(message)s"))
+        logging.getLogger().addHandler(fh)
     return args.func(args, cfg)
 
 

@@ -7,7 +7,109 @@
 Cloudflare (`Just a moment`, `cf-chl`, `challenge-platform`) запуск негайно зупиняється, зібране
 зберігається.
 
-## Встановлення
+## v2: повний знімок (12 міст, мережі, магазини)
+
+Повне ТЗ: [zakaz_fish_spec/SPEC_v2_multicity.md](zakaz_fish_spec/SPEC_v2_multicity.md) (локальна копія, не в git).
+Команди етапу 1 (`crawl-*`, `daily`, `export`, `stats`, `smoke-check`) працюють як раніше.
+
+**Що збирається.** Каталог агрегатора для міст зі списку × 5 розділів (риба, консервація, снеки, заморожене,
+напівфабрикати з фільтром за рибними назвами), картки товарів, каталоги вітрин мереж (ціна, стара ціна, знижка),
+довідник магазинів (з послугою «жива риба»), перевірка інших міст (лише звіт). Далі пакет даних для аналітиків.
+Лише HTML-сторінки, без cookies, один потік; `robots.txt` перевіряється для кожного хоста;
+`stores-api.zakaz.ua` не використовується взагалі (його robots.txt забороняє доступ).
+Плитки «Немає в наявності» (без ціни) не зберігаються.
+
+### Встановлення
+
+```bash
+python3 -m venv .venv && source .venv/bin/activate
+pip install -e '.[export,dev]'
+python -m pytest                       # офлайн
+```
+
+### Команди
+
+```bash
+python -m zakaz_fish --config CFG snapshot create [--id 2026-11-05]   # створити знімок і стартові задачі
+python -m zakaz_fish --config CFG snapshot run    [--id ID] [--max-requests N] [--stages a,b]
+python -m zakaz_fish --config CFG snapshot status [--id ID]           # прогрес, ETA, помилки за годину
+python -m zakaz_fish --config CFG snapshot retry-failed [--id ID]
+python -m zakaz_fish --config CFG snapshot export [--id ID]           # пакет -> out_dir/exports/
+python -m zakaz_fish --config CFG snapshot backup
+python -m zakaz_fish --config CFG sample [--preset v2|none] [--add NAME=URL ...]   # живі зразки, <= 40 запитів
+```
+
+Усі запити є задачами в постійній черзі (SQLite, WAL): `snapshot run` можна зупинити (Ctrl+C, `kill -9`, перезапуск
+контейнера) і запустити знову, він продовжить без дублювання. `snapshot status` можна запускати паралельно з `run`;
+`data/status.json` оновлюється щохвилини. Лог: `data/logs/` (stdout), бекап бази після кожного етапу: `data/backups/`.
+
+### Пілот на Mac
+
+```bash
+cp config.pilot.example.toml config.pilot.toml      # впишіть contact_email
+python -m zakaz_fish --config config.pilot.toml snapshot create
+python -m zakaz_fish --config config.pilot.toml snapshot run     # ~500-700 запитів, ~30 хв
+python -m zakaz_fish --config config.pilot.toml snapshot export  # -> data/pilot_out/exports/zakaz_fish_<дата>/
+```
+
+Відкрийте XLSX і `qa_report.md`. Дивіться передусім: частку товарів «лише на вітрині» і схожість
+Івано-Франківська з Кривим Рогом (розмір «національного набору»).
+
+### Сервер (LXC Debian 12 / Ubuntu 24.04, 1 vCPU, 1 ГБ RAM, 5 ГБ диска)
+
+```bash
+apt install -y python3-venv git sqlite3
+useradd -r -m -d /opt/zakaz_fish zakaz
+sudo -u zakaz git clone <repo> /opt/zakaz_fish/app
+cd /opt/zakaz_fish/app && sudo -u zakaz python3 -m venv .venv
+sudo -u zakaz .venv/bin/pip install -e '.[export]'
+sudo -u zakaz cp config.snapshot.example.toml config.toml        # впишіть contact_email, перевірте міста
+sudo -u zakaz .venv/bin/python -m zakaz_fish --config config.toml init-db
+sudo -u zakaz .venv/bin/python -m zakaz_fish --config config.toml snapshot create
+cp deploy/zakaz-fish-snapshot.service /etc/systemd/system/
+systemctl daemon-reload && systemctl enable --now zakaz-fish-snapshot
+```
+
+Моніторинг: `snapshot status`, `journalctl -u zakaz-fish-snapshot -f`, `data/status.json`.
+Після завершення: `snapshot export`, архів `data/out/exports/zakaz_fish_<дата>.zip` скопіювати на Mac (`scp`).
+Не запускайте збір на Mac і на сервері одночасно, якщо в них спільна зовнішня IP-адреса.
+
+### Коди виходу `snapshot run`
+
+| Код | Значення | systemd |
+|---|---|---|
+| 0 | черга вичерпана (`done` / `done_with_failures`) | завершення |
+| 1 | неочікувана помилка програми | перезапуск через 15 хв, продовжує з черги |
+| 2 | блокування: 403 або сторінка перевірки Cloudflare | **не** перезапускається |
+| 3 | запобіжник (8 помилок із 100 запитів, 3 рази за 3 год), три 429 за годину або 5 неочікуваних сторінок поспіль | **не** перезапускається |
+| 4 | robots.txt забороняє потрібні адреси | **не** перезапускається |
+| 130 | Ctrl+C (знімок `stopped`, черга зберігається) | |
+
+### Що робити після блокування (код 2)
+
+Нічого не змінювати щонайменше добу. Потім запустити знову з меншою швидкістю (збільшити `delay_min_s` /
+`delay_max_s` у `[rate]`). Змінювати IP, щоб обійти блокування, **не можна**; проксі, ротація IP, браузерний
+User-Agent, копіювання cookie з браузера заборонені. Код 3: подивитися `snapshot status` і `http_log`, лише потім
+`snapshot run` знову. Код 4: перевірити `https://zakaz.ua/robots.txt`, не обходити.
+
+### Наступний знімок
+
+`snapshot create --id <нова дата>` (нова база не потрібна; свіжі картки товарів, молодші за
+`details_max_age_days`, не перезбираються). Міста з `discovered_cities.csv` можна внести вручну в `cities_extra`.
+
+### Ручна перевірка способів доставки (≈15 хв, користувач)
+
+У браузері у Львові порівняти кількість товарів рибної категорії для гостя без адреси, для «Самовивіз → Львів»,
+для «Кур'єр» з адресою у Львові і для «Нова пошта»; подивитися, чи зникають товари NOVUS; перевірити, чи є фільтр
+«Мережа/Магазин» і чи змінює він URL. Результати вписати в README пакета (розділ «Контекст міста»).
+
+### Рішення, прийняті за замовчуванням
+
+- Плитки «Немає в наявності» не зберігаються (лічильник `out_of_stock` у `city_category_stats`).
+- Для розділу `semi` корінь із фільтром `fish_keywords`; у підрозділи (їх 18) не спускаємось, бо корінь їх містить.
+- Порожня категорія малого міста: відповідь 200 з H1 і 0 карток (не редірект і не 404), позначається `not_found`.
+
+## Встановлення (етап 1)
 
 Потрібен Python 3.11+.
 
@@ -107,9 +209,16 @@ python -m zakaz_fish export                       # -> out_dir (data/out)
 
 ## TODO(unverified): не реалізовано, бо не перевірено
 
-- Запити до `stores-api.zakaz.ua/graphql`: `StorePriceSource.fetch` кидає `NotImplementedError`.
-  Невідомо, як передаються магазини (змінні чи `X-Store-Ids` / `X-Chain-Ids` / `X-Delivery-Type`)
-  і чи працює запит без cookie. Парсер відповіді `uberProducts` є, таблиця `store_prices` порожня.
+- Запити до `stores-api.zakaz.ua/graphql`: `StorePriceSource.fetch` кидає `NotImplementedError`, бо robots.txt
+  API забороняє доступ (`Disallow: /`); лише з письмового дозволу zakaz.ua. Парсер відповіді `uberProducts`
+  є, таблиця `store_prices` порожня.
+- v2: назви категорій вітрин для розділів `snacks`, `frozen`, `semi` («Рибні снеки», «Риба та морепродукти заморожені»,
+  «Напівфабрикати…») і батьківські «Чипси та снеки» / «Снеки» перевірені лише за ТЗ. Підтверджено тільки
+  «Риба та морепродукти» (NOVUS, METRO, Таврія В), «Консерви» → «Рибна консервація» і «Заморозка» на NOVUS.
+  Якщо категорії не знайдено, це видно в `qa_report.md`; виправляйте через `[storefront_overrides.<мережа>]`.
+- v2: розмітку вітрин перевірено на novus, metro, tavriav; для інших мереж вона може відрізнятися.
+- v2: таблицю `zakaz_fish/data/gs1_prefixes.csv` складено за переліком префіксів GS1; звірте з gs1.org перед публікацією.
+- v2: поведінка вітрин за останньою сторінкою (редірект чи порожня сторінка) перевірена лише на моках.
 - Next.js RSC-запити, Playwright / headless-браузер.
 - Блок `Available Retails` (у серверному HTML його немає).
 - Автоматичне визначення міста магазину (`stores.city` заповнюється вручну).
