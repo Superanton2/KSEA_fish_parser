@@ -29,7 +29,8 @@ def ean13_check(code13: str) -> bool:
 
 def classify_id(product_id: str, known_chains) -> tuple[str, str | None, bool | None, str | None]:
     """-> (id_type, ean13, ean13_valid, chain_id)."""
-    if _EAN14.match(product_id):
+    # ean лише якщо 14 цифр і провідний 0 (далі EAN-13); інші 14-цифрові ID це «other»
+    if _EAN14.match(product_id) and product_id.startswith("0"):
         ean13 = product_id[1:]
         return "ean", ean13, ean13_check(ean13), None
     m = _CHAIN.match(product_id)

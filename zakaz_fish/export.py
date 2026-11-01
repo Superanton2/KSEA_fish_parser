@@ -4,6 +4,8 @@ from pathlib import Path
 
 from openpyxl import Workbook
 
+from .dictionary import FIELDS, NOTES, render_markdown
+
 SHEETS = {
     "products": "SELECT * FROM products ORDER BY product_id",
     "listing_prices_latest": None,  # формується окремо
@@ -42,12 +44,25 @@ def export_all(conn: sqlite3.Connection, out_dir: str | Path) -> list[Path]:
 
     wb = Workbook()
     wb.remove(wb.active)
+    readme = wb.create_sheet("README")
+    for note in NOTES:
+        readme.append([note])
+    readme.column_dimensions["A"].width = 140
+    dictionary = wb.create_sheet("dictionary")
+    dictionary.append(["sheet", "field", "description"])
+    for row in FIELDS:
+        dictionary.append(list(row))
+    for col, width in zip("ABC", (24, 22, 120)):
+        dictionary.column_dimensions[col].width = width
     for name in SHEETS:
         header, rows = _query(conn, name)
         ws = wb.create_sheet(name)
         ws.append(header)
         for r in rows:
             ws.append(list(r))
+    md = out / "DATA_DICTIONARY.md"
+    md.write_text(render_markdown(), encoding="utf-8")
+    written.append(md)
     xlsx = out / "zakaz_fish.xlsx"
     wb.save(xlsx)
     written.append(xlsx)

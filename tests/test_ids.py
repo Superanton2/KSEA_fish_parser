@@ -32,3 +32,9 @@ def test_classify_chain_and_other():
     assert classify_id("novus02877258000000", CHAINS) == ("chain", None, None, "novus")
     assert classify_id("unknown02877258000000", CHAINS)[0] == "other"
     assert classify_id("abc", CHAINS)[0] == "other"
+
+
+def test_classify_14_digits_without_leading_zero_is_other():
+    assert classify_id("14820088410548", CHAINS) == ("other", None, None, None)
+    assert classify_id("94820088410548", CHAINS)[0] == "other"
+    assert classify_id("04820088410548", CHAINS)[0] == "ean"

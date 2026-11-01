@@ -66,32 +66,33 @@ def cmd_smoke(args, cfg) -> int:
     return 0 if all(c.ok for c in checks) else 1
 
 
-def cmd_crawl_listings(args, cfg) -> int:
+def _run_crawl(args, cfg, runner) -> int:
     conn = _open(cfg)
     if not _guard(conn, args):
         return 1
-    with Fetcher(cfg, cfg.raw_dir) as fetcher:
-        return _report(conn, *crawl.crawl_listings(conn, fetcher, cfg))
+    try:
+        with Fetcher(cfg, cfg.raw_dir) as fetcher:
+            return _report(conn, *runner(conn, fetcher))
+    except KeyboardInterrupt:
+        # run уже позначено 'stopped' (interrupted), зібране збережено
+        print("Перервано (Ctrl+C). Зібрані дані збережено, run позначено stopped.", file=sys.stderr)
+        return 130
+
+
+def cmd_crawl_listings(args, cfg) -> int:
+    return _run_crawl(args, cfg, lambda conn, f: crawl.crawl_listings(conn, f, cfg))
 
 
 def cmd_crawl_details(args, cfg) -> int:
-    conn = _open(cfg)
-    if not _guard(conn, args):
-        return 1
-    with Fetcher(cfg, cfg.raw_dir) as fetcher:
-        return _report(conn, *crawl.crawl_details(conn, fetcher, cfg, args.mode, args.limit))
+    return _run_crawl(args, cfg, lambda conn, f: crawl.crawl_details(conn, f, cfg, args.mode, args.limit))
 
 
 def cmd_daily(args, cfg) -> int:
-    conn = _open(cfg)
-    if not _guard(conn, args):
-        return 1
-    with Fetcher(cfg, cfg.raw_dir) as fetcher:
-        return _report(conn, *crawl.crawl_daily(conn, fetcher, cfg))
+    return _run_crawl(args, cfg, lambda conn, f: crawl.crawl_daily(conn, f, cfg))
 
 
 def cmd_export(args, cfg) -> int:
-    for path in export_all(_open(cfg), "data/out"):
+    for path in export_all(_open(cfg), cfg.out_dir):
         print(path)
     return 0
 

@@ -1,10 +1,13 @@
 import re
 from dataclasses import dataclass, field
+from urllib.parse import urljoin
 
 from bs4 import BeautifulSoup
 
 from .ids import parse_product_url
 from .prices import price_to_kop
+
+BASE_URL = "https://zakaz.ua"
 
 
 @dataclass
@@ -49,7 +52,7 @@ def parse_listing(html: str) -> ListingPage:
     for a in soup.select('[data-marker="Products List"] a[href*="/uk/products/"]'):
         if not a.select_one('[data-marker="CatalogProductTile"]'):
             continue
-        href = a["href"]
+        href = urljoin(BASE_URL, a["href"])
         slug, product_id = parse_product_url(href)
         start = _text(a.select_one(".PricesRange__start"))
         end = _text(a.select_one(".PricesRange__end"))
@@ -65,7 +68,7 @@ def parse_listing(html: str) -> ListingPage:
             price_max_kop=price_max,
             weight_text=_text(a.select_one('[data-marker="Weight"]')),
             is_promo=a.select_one('[data-marker="Offer"]') is not None,
-            image_url=img["src"] if img else None,
+            image_url=urljoin(BASE_URL, img["src"]) if img else None,
             position=len(tiles) + 1,
         ))
 

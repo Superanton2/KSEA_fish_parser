@@ -1,17 +1,21 @@
 import logging
 import re
 import sqlite3
+from contextlib import contextmanager
 from datetime import datetime, timedelta, timezone
+from urllib.parse import urljoin
 
 from . import db
 from .config import Config
-from .http import FetchError, Fetcher, StopCrawl
+from .http import FetchError, Fetcher, PageRedirected, StopCrawl
 from .ids import classify_id
 from .parse_listing import parse_listing
 from .parse_product import ATTR_TO_COLUMN, parse_product
 from .prices import parse_weight
 
 log = logging.getLogger(__name__)
+
+MAX_CONSECUTIVE_EMPTY = 5
 
 KNOWN_SUBCATEGORIES = [
     "fresh-fish-zakaz", "frozen-fish-zakaz", "seafood-zakaz", "fish-paste-zakaz",
@@ -35,7 +39,13 @@ def _crawl_category(conn, fetcher: Fetcher, cfg: Config, run_id: str, now: str, 
     seen: set[str] = set()
     total, subcats = None, []
     for page in range(1, cfg.max_pages_per_category + 1):
-        html = fetcher.get(category_url(cfg, slug, page), f"{run_id}/listing/{slug}_p{page}.html.gz")
+        try:
+            # Після останньої сторінки сайт редіректить ?page=N+1 на сторінку 1: це кінець категорії.
+            html = fetcher.get(category_url(cfg, slug, page), f"{run_id}/listing/{slug}_p{page}.html.gz",
+                               follow_redirects=(page == 1))
+        except PageRedirected as e:
+            log.info("Категорія %s: сторінка %d редіректить на %s, кінець пагінації", slug, page, e.location)
+            break
         parsed = parse_listing(html)
         if page == 1:
             total, subcats = parsed.total, parsed.subcategories
@@ -130,11 +140,31 @@ def _listings(conn: sqlite3.Connection, fetcher: Fetcher, cfg: Config, run_id: s
     return status, stats, None
 
 
+@contextmanager
+def _tracked_run(conn: sqlite3.Connection, fetcher: Fetcher, kind: str, city: str):
+    """Створює run і гарантує, що він не лишиться у статусі running.
+
+    Ctrl+C -> 'stopped' з причиною 'interrupted' (виняток піднімається далі); інша помилка -> 'failed'.
+    Зібрані дані зберігаються: кожна сторінка вже закомічена, решту комітимо тут.
+    """
+    run_id = db.start_run(conn, kind, city)
+    try:
+        yield run_id
+    except KeyboardInterrupt:
+        conn.commit()
+        db.finish_run(conn, run_id, "stopped", {"requests": fetcher.requests}, "interrupted")
+        raise
+    except Exception as e:
+        conn.commit()
+        db.finish_run(conn, run_id, "failed", {"requests": fetcher.requests}, f"{type(e).__name__}: {e}")
+        raise
+
+
 def crawl_listings(conn: sqlite3.Connection, fetcher: Fetcher, cfg: Config, kind: str = "listings") -> tuple[str, str]:
     """-> (run_id, status)."""
-    run_id = db.start_run(conn, kind, cfg.city)
-    status, stats, reason = _listings(conn, fetcher, cfg, run_id)
-    db.finish_run(conn, run_id, status, stats, reason)
+    with _tracked_run(conn, fetcher, kind, cfg.city) as run_id:
+        status, stats, reason = _listings(conn, fetcher, cfg, run_id)
+        db.finish_run(conn, run_id, status, stats, reason)
     return run_id, status
 
 
@@ -143,20 +173,23 @@ _STALE = re.compile(r"^stale(?::(\d+))?$")
 
 def select_for_details(conn: sqlite3.Connection, mode: str, limit: int | None = None) -> list[tuple[str, str]]:
     """-> [(product_id, url)] для mode = new | all | stale[:days]."""
+    # not_found (404) не вибираємо в new і stale: сторінки товару вже немає
+    not_found = "COALESCE(details_status, '') != 'not_found'"
     if mode == "new":
-        where, params = "details_scraped_at IS NULL", ()
+        where, params = f"details_scraped_at IS NULL AND {not_found}", ()
     elif mode == "all":
         where, params = "1=1", ()
     elif m := _STALE.match(mode):
         days = int(m.group(1) or 7)
         cutoff = (datetime.now(timezone.utc) - timedelta(days=days)).strftime("%Y-%m-%dT%H:%M:%SZ")
-        where, params = "(details_scraped_at IS NULL OR details_scraped_at < ?)", (cutoff,)
+        where, params = f"(details_scraped_at IS NULL OR details_scraped_at < ?) AND {not_found}", (cutoff,)
     else:
         raise ValueError(f"Невідомий режим: {mode!r} (new | all | stale:<днів>)")
     sql = f"SELECT product_id, url FROM products WHERE is_active = 1 AND {where} ORDER BY first_seen, product_id"
     if limit:
         sql += f" LIMIT {int(limit)}"
-    return [(r[0], r[1]) for r in conn.execute(sql, params)]
+    # у старих базах url міг бути відносним
+    return [(r[0], urljoin("https://zakaz.ua", r[1])) for r in conn.execute(sql, params)]
 
 
 def save_details(conn: sqlite3.Connection, product_id: str, details, cfg: Config, now: str) -> None:
@@ -181,7 +214,7 @@ def save_details(conn: sqlite3.Connection, product_id: str, details, cfg: Config
         carbs_100g=details.carbs,
         description=details.description if cfg.store_descriptions else None,
         cat_l1=crumbs.get(1, (None,))[0], cat_l2=crumbs.get(2, (None,))[0], cat_l3=crumbs.get(3, (None,))[0],
-        details_scraped_at=now,
+        details_scraped_at=now, details_status="ok",
     )
     assignments = ", ".join(f"{c} = ?" for c in sets)
     conn.execute(f"UPDATE products SET {assignments} WHERE product_id = ?", (*sets.values(), product_id))
@@ -190,6 +223,7 @@ def save_details(conn: sqlite3.Connection, product_id: str, details, cfg: Config
 def _details(conn, fetcher, cfg, run_id, mode, limit) -> tuple[str, dict, str | None]:
     todo = select_for_details(conn, mode, limit)
     stats = {"selected": len(todo), "done": 0, "failed": []}
+    empty_streak = 0
     for product_id, url in todo:
         try:
             html = fetcher.get(url, f"{run_id}/product/{product_id}.html.gz")
@@ -199,9 +233,28 @@ def _details(conn, fetcher, cfg, run_id, mode, limit) -> tuple[str, dict, str | 
             return "stopped", stats, str(e)
         except FetchError as e:
             log.error("Товар %s не завантажено: %s", product_id, e)
+            status = "not_found" if e.status_code == 404 else "error"
+            conn.execute("UPDATE products SET details_status = ? WHERE product_id = ?", (status, product_id))
+            conn.commit()
             stats["failed"].append(product_id)
+            stats[status] = stats.get(status, 0) + 1
             continue
         details = parse_product(html, cfg.store_descriptions)
+        if details.is_empty:
+            log.error("Товар %s: сторінка без хлібних крихт і Taxon", product_id)
+            conn.execute("UPDATE products SET details_status = 'empty' WHERE product_id = ?", (product_id,))
+            conn.commit()
+            stats["failed"].append(product_id)
+            stats["empty"] = stats.get("empty", 0) + 1
+            empty_streak += 1
+            if empty_streak >= MAX_CONSECUTIVE_EMPTY:
+                stats["requests"] = fetcher.requests
+                return "stopped", stats, (
+                    f"{MAX_CONSECUTIVE_EMPTY} сторінок товарів поспіль без хлібних крихт і Taxon: "
+                    "ймовірно, сервер віддає HTML без даних (потрібен браузерний рендеринг) або змінилась "
+                    "верстка. Перевірте smoke-check")
+            continue
+        empty_streak = 0
         save_details(conn, product_id, details, cfg, db.utc_now())
         conn.commit()
         stats["done"] += 1
@@ -212,22 +265,20 @@ def _details(conn, fetcher, cfg, run_id, mode, limit) -> tuple[str, dict, str | 
 def crawl_details(conn: sqlite3.Connection, fetcher: Fetcher, cfg: Config, mode: str = "new",
                   limit: int | None = None, kind: str = "details") -> tuple[str, str]:
     select_for_details(conn, mode, 0)  # валідація режиму до створення run
-    run_id = db.start_run(conn, kind, cfg.city)
-    status, stats, reason = _details(conn, fetcher, cfg, run_id, mode, limit)
-    db.finish_run(conn, run_id, status, stats, reason)
+    with _tracked_run(conn, fetcher, kind, cfg.city) as run_id:
+        status, stats, reason = _details(conn, fetcher, cfg, run_id, mode, limit)
+        db.finish_run(conn, run_id, status, stats, reason)
     return run_id, status
 
 
 def crawl_daily(conn: sqlite3.Connection, fetcher: Fetcher, cfg: Config) -> tuple[str, str]:
-    run_id = db.start_run(conn, "daily", cfg.city)
-    status, stats, reason = _listings(conn, fetcher, cfg, run_id)
-    all_stats = {"listings": stats}
-    if status != "stopped":
-        d_status, d_stats, d_reason = _details(conn, fetcher, cfg, run_id, "new", None)
-        all_stats["details"] = d_stats
-        if d_status != "ok" and status == "ok":
-            status, reason = d_status, d_reason
-        elif d_status == "stopped":
-            status, reason = d_status, d_reason
-    db.finish_run(conn, run_id, status, all_stats, reason)
+    with _tracked_run(conn, fetcher, "daily", cfg.city) as run_id:
+        status, stats, reason = _listings(conn, fetcher, cfg, run_id)
+        all_stats = {"listings": stats}
+        if status != "stopped":
+            d_status, d_stats, d_reason = _details(conn, fetcher, cfg, run_id, "new", None)
+            all_stats["details"] = d_stats
+            if d_status == "stopped" or (d_status != "ok" and status == "ok"):
+                status, reason = d_status, d_reason
+        db.finish_run(conn, run_id, status, all_stats, reason)
     return run_id, status

@@ -13,15 +13,37 @@ log = logging.getLogger(__name__)
 STOP_STATUSES = {403, 429, 503}
 RETRY_STATUSES = {500, 502, 504}
 STOP_MARKERS = ("Just a moment", "cf-chl", "challenge-platform")
+# Cloudflare вставляє цей скрипт-«маячок» у звичайні сторінки (перевірено: відповідь 200 з 40 картками);
+# сам по собі він не ознака перевірки. Справжня перевірка має інші шляхи (напр. .../orchestrate/chl_page/).
+BENIGN_SNIPPETS = ("/cdn-cgi/challenge-platform/scripts/jsd/",)
 RETRY_PAUSES_S = (5, 15, 45)
+# Повторюємо лише це; UnsupportedProtocol, InvalidURL, LocalProtocolError та інше це помилки
+# запиту або коду, повтор їх не лікує.
+RETRY_EXCEPTIONS = (httpx.TimeoutException, httpx.ConnectError, httpx.ReadError)
 
 
 class StopCrawl(Exception):
     """Сайт відповів блокуванням або перевіркою Cloudflare: запуск негайно зупиняється."""
 
+    def __init__(self, message: str, body: str | None = None):
+        super().__init__(message)
+        self.body = body  # тіло відповіді для діагностики
+
+
+class PageRedirected(Exception):
+    """Запит із follow_redirects=False отримав редірект (сайт так закінчує пагінацію: ?page=N+1 -> сторінка 1)."""
+
+    def __init__(self, url: str, location: str | None):
+        super().__init__(f"{url} -> {location}")
+        self.location = location
+
 
 class FetchError(Exception):
     """Запит не вдався (мережа, таймаут, 5xx після повторів або інший непридатний статус)."""
+
+    def __init__(self, message: str, status_code: int | None = None):
+        super().__init__(message)
+        self.status_code = status_code
 
 
 class Fetcher:
@@ -56,27 +78,37 @@ class Fetcher:
     def elapsed_s(self) -> float:
         return time.monotonic() - self._started
 
-    def get(self, url: str, raw_name: str | None = None) -> str:
-        """GET з паузою, повторами й аварійною зупинкою. Успішну відповідь зберігає в raw/ (gzip)."""
+    def get(self, url: str, raw_name: str | None = None, *, follow_redirects: bool = True) -> str:
+        """GET з паузою, повторами й аварійною зупинкою. Успішну відповідь зберігає в raw/ (gzip).
+
+        follow_redirects=False: на 3xx піднімає PageRedirected, не роблячи другого запиту.
+        """
         last_error = "невідома помилка"
         for attempt in range(len(RETRY_PAUSES_S) + 1):
             self._sleep(random.uniform(self.cfg.delay_min_s, self.cfg.delay_max_s))
             self.requests += 1
             try:
-                resp = self.client.get(url)
-            except httpx.TransportError as e:  # мережеві помилки й таймаути
+                resp = self.client.get(url, follow_redirects=follow_redirects)
+            except RETRY_EXCEPTIONS as e:
                 last_error = f"{type(e).__name__}: {e}"
+            except (httpx.TransportError, httpx.InvalidURL) as e:
+                raise FetchError(f"{type(e).__name__}: {e} для {url}") from e
             else:
                 body = resp.text
                 if resp.status_code in STOP_STATUSES:
-                    raise StopCrawl(f"HTTP {resp.status_code} для {url}")
+                    raise StopCrawl(f"HTTP {resp.status_code} для {url}", body)
+                checked = body
+                for snippet in BENIGN_SNIPPETS:
+                    checked = checked.replace(snippet, "")
                 for marker in STOP_MARKERS:
-                    if marker in body:
-                        raise StopCrawl(f"Сторінка перевірки Cloudflare ({marker!r}) для {url}")
+                    if marker in checked:
+                        raise StopCrawl(f"Сторінка перевірки Cloudflare ({marker!r}) для {url}", body)
+                if not follow_redirects and resp.is_redirect:
+                    raise PageRedirected(url, resp.headers.get("location"))
                 if resp.status_code in RETRY_STATUSES:
                     last_error = f"HTTP {resp.status_code}"
                 elif resp.status_code >= 400:
-                    raise FetchError(f"HTTP {resp.status_code} для {url}")
+                    raise FetchError(f"HTTP {resp.status_code} для {url}", resp.status_code)
                 else:
                     self._save_raw(raw_name, body)
                     log.info("GET %s -> %s (запитів: %d, %.0f с)", url, resp.status_code,

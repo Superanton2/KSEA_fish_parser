@@ -85,7 +85,8 @@ def test_export_populated_and_empty(conn, listing_html, product_html, tmp_path):
 
     populated(conn, listing_html, product_html, tmp_path)
     paths = export_all(conn, tmp_path / "out")
-    assert {p.name for p in paths} == {"products.csv", "listing_prices_latest.csv", "zakaz_fish.xlsx"}
+    assert {p.name for p in paths} == {"products.csv", "listing_prices_latest.csv", "zakaz_fish.xlsx",
+                                       "DATA_DICTIONARY.md"}
     raw = (tmp_path / "out" / "products.csv").read_bytes()
     assert raw.startswith(b"\xef\xbb\xbf")
     with (tmp_path / "out" / "products.csv").open(encoding="utf-8-sig") as f:
@@ -95,7 +96,8 @@ def test_export_populated_and_empty(conn, listing_html, product_html, tmp_path):
     with (tmp_path / "out" / "listing_prices_latest.csv").open(encoding="utf-8-sig") as f:
         assert len(list(csv.DictReader(f))) == 400
     wb = load_workbook(tmp_path / "out" / "zakaz_fish.xlsx")
-    assert wb.sheetnames == ["products", "listing_prices_latest", "categories", "chains", "stores"]
+    assert wb.sheetnames == ["README", "dictionary", "products", "listing_prices_latest", "categories",
+                             "chains", "stores"]
     assert wb["products"].max_row == 41
 
 
@@ -123,3 +125,18 @@ def test_cli_init_seed_stats_export(tmp_path, monkeypatch, fixtures_dir, capsys)
     assert "Мереж у довіднику: 21, магазинів: 21" in capsys.readouterr().out
     assert main(["export"]) == 0
     assert (tmp_path / "data/out/zakaz_fish.xlsx").exists()
+
+
+def test_export_dir_comes_from_config(tmp_path, monkeypatch):
+    monkeypatch.chdir(tmp_path)
+    (tmp_path / "config.toml").write_text('out_dir = "my/exports"\ndb_path = "x.sqlite"\n', encoding="utf-8")
+    assert main(["export"]) == 0
+    assert (tmp_path / "my/exports/zakaz_fish.xlsx").exists()
+    assert not (tmp_path / "data/out").exists()
+    assert Config().out_dir == "data/out"
+
+
+def test_smoke_saves_blocked_body_for_diagnosis(conn, tmp_path):
+    f = fetcher_for(lambda r: httpx.Response(200, text="<title>Just a moment...</title>"))
+    run_smoke(conn, Config(), f, tmp_path)
+    assert "Just a moment" in (tmp_path / "blocked_response.html").read_text(encoding="utf-8")

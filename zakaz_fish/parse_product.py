@@ -27,6 +27,11 @@ class ProductDetails:
     carbs: float | None = None
     description: str | None = None
 
+    @property
+    def is_empty(self) -> bool:
+        """Ні хлібних крихт, ні жодного Taxon: схоже на «порожню» оболонку без даних товару."""
+        return not self.breadcrumbs and not self.attributes
+
     def columns(self) -> dict[str, str]:
         """Атрибути, відображені в колонки products."""
         return {col: self.attributes[key][1]

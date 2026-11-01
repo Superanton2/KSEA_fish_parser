@@ -10,6 +10,7 @@ class Config:
     root_category: str = "fish-and-seafood-zakaz"
     db_path: str = "data/zakaz_fish.sqlite"
     raw_dir: str = "data/raw"
+    out_dir: str = "data/out"
     delay_min_s: float = 1.5
     delay_max_s: float = 3.0
     timeout_s: float = 30

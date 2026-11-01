@@ -21,6 +21,8 @@ def price_to_kop(text: str) -> int:
 def parse_weight(text: str | None) -> tuple[str, float | None, str | None]:
     """'за 1 кг' -> ('per_kg', 1, 'кг'); '250 г' -> ('pack', 250, 'г'); інше -> ('unknown', None, None)."""
     t = re.sub(r"[\s  ]+", " ", (text or "")).strip().lower()
+    if not t:  # порожнє поле ваги (напр. устриці поштучно): не помилка, просто немає даних
+        return "unknown", None, None
     if _PER_KG.match(t):
         return "per_kg", 1, "кг"
     m = _PACK.match(t)

@@ -3,6 +3,7 @@ lang = "uk"
 root_category = "fish-and-seafood-zakaz"
 db_path = "data/zakaz_fish.sqlite"
 raw_dir = "data/raw"
+out_dir = "data/out"
 delay_min_s = 1.5
 delay_max_s = 3.0
 timeout_s = 30

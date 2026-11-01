@@ -28,3 +28,11 @@ def test_price_to_kop_invalid():
 ])
 def test_parse_weight(text, expected):
     assert parse_weight(text) == expected
+
+
+def test_empty_weight_is_unknown_without_warning(caplog):
+    for text in ("", "  ", None):
+        assert parse_weight(text) == ("unknown", None, None)
+    assert not caplog.records
+    parse_weight("щось дивне")
+    assert len(caplog.records) == 1  # нерозпізнаний непорожній текст як і раніше попереджає

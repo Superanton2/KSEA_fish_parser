@@ -57,3 +57,20 @@ def test_subcategories(page):
 def test_empty_page():
     p = parse_listing("<html><body></body></html>")
     assert p.total is None and p.tiles == [] and p.subcategories == []
+
+
+@pytest.fixture(scope="module")
+def relative_page(fixtures_dir):
+    html = (fixtures_dir / "listing_fish_and_seafood_p1_relative.html").read_text(encoding="utf-8")
+    assert 'href="/uk/products/' in html and "https://zakaz.ua/uk/products/" not in html
+    return parse_listing(html)
+
+
+def test_relative_hrefs_become_absolute(page, relative_page):
+    assert len(relative_page.tiles) == 40
+    assert all(t.url.startswith("https://zakaz.ua/uk/products/") for t in relative_page.tiles)
+    assert all(t.image_url.startswith("https://") for t in relative_page.tiles)
+    assert [t.url for t in relative_page.tiles] == [t.url for t in page.tiles]
+    assert [t.image_url for t in relative_page.tiles] == [t.image_url for t in page.tiles]
+    assert relative_page.tiles[0].product_id == "novus02877258000000"
+    assert relative_page.subcategories == page.subcategories

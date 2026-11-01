@@ -171,3 +171,201 @@ def test_daily(conn, listing_html, product_html, tmp_path):
     assert status == "ok"
     assert count(conn, "SELECT COUNT(*) FROM products WHERE details_scraped_at IS NOT NULL") == 40
     assert count(conn, "SELECT COUNT(*) FROM runs WHERE kind = 'daily'") == 1
+
+
+def test_details_request_absolute_urls_from_relative_listing(conn, fixtures_dir, product_html, tmp_path):
+    relative = (fixtures_dir / "listing_fish_and_seafood_p1_relative.html").read_text(encoding="utf-8")
+    requested = []
+
+    def handler(request):
+        requested.append(str(request.url))
+        return site(relative, product_html)(request)
+
+    f = make_fetcher(handler, tmp_path)
+    crawl.crawl_listings(conn, f, Config())
+    assert all(r[0].startswith("https://zakaz.ua/uk/products/")
+               for r in conn.execute("SELECT url FROM products"))
+    # імітація старої бази з відносним url
+    conn.execute("UPDATE products SET url = REPLACE(url, 'https://zakaz.ua', '')")
+    requested.clear()
+    crawl.crawl_details(conn, f, Config(), "new", 3)
+    products = [u for u in requested if "/uk/products/" in u]
+    assert len(products) == 3
+    assert all(u.startswith("https://zakaz.ua/uk/products/") for u in products)
+
+
+def _listing_and_details(conn, listing_html, product_html, tmp_path, product_handler, limit=3):
+    def handler(request):
+        if "/uk/products/" in str(request.url):
+            return product_handler(request)
+        return site(listing_html, product_html)(request)
+
+    f = make_fetcher(handler, tmp_path)
+    crawl.crawl_listings(conn, f, Config())
+    return f, crawl.crawl_details(conn, f, Config(), "new", limit)
+
+
+def test_details_status_ok(conn, listing_html, product_html, tmp_path):
+    _listing_and_details(conn, listing_html, product_html, tmp_path,
+                         lambda r: httpx.Response(200, text=product_html))
+    assert count(conn, "SELECT COUNT(*) FROM products WHERE details_status = 'ok' "
+                       "AND details_scraped_at IS NOT NULL") == 3
+
+
+def test_404_marks_not_found_and_new_mode_skips_it(conn, listing_html, product_html, tmp_path):
+    f, (_, status) = _listing_and_details(conn, listing_html, product_html, tmp_path,
+                                          lambda r: httpx.Response(404, text="нема"), limit=2)
+    assert status == "failed"
+    nf = [r[0] for r in conn.execute("SELECT product_id FROM products WHERE details_status = 'not_found'")]
+    assert len(nf) == 2
+    assert count(conn, "SELECT COUNT(*) FROM products WHERE details_scraped_at IS NOT NULL") == 0
+    assert not {p for p, _ in crawl.select_for_details(conn, "new")} & set(nf)
+    assert not {p for p, _ in crawl.select_for_details(conn, "stale:7")} & set(nf)
+    assert set(nf) <= {p for p, _ in crawl.select_for_details(conn, "all")}
+    assert len(crawl.select_for_details(conn, "new")) == 38
+
+
+def test_server_error_marks_error_and_is_retried_later(conn, listing_html, product_html, tmp_path):
+    _, (_, status) = _listing_and_details(conn, listing_html, product_html, tmp_path,
+                                          lambda r: httpx.Response(500), limit=1)
+    assert status == "failed"
+    assert count(conn, "SELECT COUNT(*) FROM products WHERE details_status = 'error'") == 1
+    assert len(crawl.select_for_details(conn, "new")) == 40
+
+
+def test_init_db_migrates_old_schema():
+    c = db.connect(":memory:")
+    c.execute("CREATE TABLE products (product_id TEXT PRIMARY KEY, id_type TEXT NOT NULL, url TEXT NOT NULL, "
+              "first_seen TEXT NOT NULL, last_seen TEXT NOT NULL, details_scraped_at TEXT)")
+    db.init_db(c)
+    assert "details_status" in {r[1] for r in c.execute("PRAGMA table_info(products)")}
+
+
+BARE_PRODUCT = "<html><body><h1>Оболонка</h1></body></html>"
+
+
+def test_empty_product_page_is_failed_not_scraped(conn, listing_html, product_html, tmp_path):
+    _, (run_id, status) = _listing_and_details(conn, listing_html, product_html, tmp_path,
+                                               lambda r: httpx.Response(200, text=BARE_PRODUCT), limit=3)
+    assert status == "failed"
+    assert count(conn, "SELECT COUNT(*) FROM products WHERE details_status = 'empty'") == 3
+    assert count(conn, "SELECT COUNT(*) FROM products WHERE details_scraped_at IS NOT NULL") == 0
+    assert count(conn, "SELECT COUNT(*) FROM product_attributes") == 0
+    stats = json.loads(conn.execute("SELECT stats_json FROM runs WHERE run_id = ?", (run_id,)).fetchone()[0])
+    assert len(stats["failed"]) == 3 and stats["empty"] == 3
+    assert len(crawl.select_for_details(conn, "new")) == 40  # empty перевіряється наново
+
+
+def test_five_empty_pages_in_a_row_stop_run(conn, listing_html, product_html, tmp_path):
+    f, (run_id, status) = _listing_and_details(conn, listing_html, product_html, tmp_path,
+                                               lambda r: httpx.Response(200, text=BARE_PRODUCT), limit=20)
+    assert status == "stopped"
+    row = conn.execute("SELECT status, stop_reason FROM runs WHERE run_id = ?", (run_id,)).fetchone()
+    assert row["status"] == "stopped" and "5 сторінок" in row["stop_reason"]
+    assert count(conn, "SELECT COUNT(*) FROM products WHERE details_status = 'empty'") == 5
+    assert f.requests == 20 + 5  # 20 запитів списків + рівно 5 товарів, далі зупинка
+
+
+def test_good_page_resets_empty_streak(conn, listing_html, product_html, tmp_path):
+    calls = []
+
+    def handler(request):
+        calls.append(1)
+        # 4 порожні, 1 нормальна, 4 порожні: серія не досягає 5
+        text = product_html if len(calls) == 5 else BARE_PRODUCT
+        return httpx.Response(200, text=text)
+
+    _, (_, status) = _listing_and_details(conn, listing_html, product_html, tmp_path, handler, limit=9)
+    assert status == "failed"
+    assert count(conn, "SELECT COUNT(*) FROM products WHERE details_status = 'empty'") == 8
+    assert count(conn, "SELECT COUNT(*) FROM products WHERE details_status = 'ok'") == 1
+
+
+def interrupting(listing_html, product_html, on_request):
+    calls = []
+
+    def handler(request):
+        calls.append(str(request.url))
+        if len(calls) == on_request:
+            raise KeyboardInterrupt
+        return site(listing_html, product_html)(request)
+
+    return handler
+
+
+def last_run(conn):
+    return conn.execute("SELECT * FROM runs ORDER BY started_at DESC, run_id DESC LIMIT 1").fetchone()
+
+
+def test_interrupt_in_listings_marks_run_stopped_and_keeps_data(conn, listing_html, product_html, tmp_path):
+    _insert_old_product(conn)
+    f = make_fetcher(interrupting(listing_html, product_html, 4), tmp_path)
+    with pytest.raises(KeyboardInterrupt):
+        crawl.crawl_listings(conn, f, Config())
+    run = last_run(conn)
+    assert (run["status"], run["stop_reason"]) == ("stopped", "interrupted")
+    assert run["finished_at"]
+    assert count(conn, "SELECT COUNT(*) FROM products") == 41  # 40 зі сторінок до перерви + old1
+    assert count(conn, "SELECT is_active FROM products WHERE product_id = 'old1'") == 1
+
+
+def test_interrupt_in_details_keeps_finished_products(conn, listing_html, product_html, tmp_path):
+    crawl.crawl_listings(conn, make_fetcher(site(listing_html, product_html), tmp_path), Config())
+    f = make_fetcher(interrupting(listing_html, product_html, 3), tmp_path)
+    with pytest.raises(KeyboardInterrupt):
+        crawl.crawl_details(conn, f, Config(), "new", 10)
+    run = last_run(conn)
+    assert (run["kind"], run["status"], run["stop_reason"]) == ("details", "stopped", "interrupted")
+    assert count(conn, "SELECT COUNT(*) FROM products WHERE details_status = 'ok'") == 2
+
+
+def test_interrupt_in_daily(conn, listing_html, product_html, tmp_path):
+    f = make_fetcher(interrupting(listing_html, product_html, 25), tmp_path)  # у фазі деталей
+    with pytest.raises(KeyboardInterrupt):
+        crawl.crawl_daily(conn, f, Config())
+    run = last_run(conn)
+    assert (run["kind"], run["status"], run["stop_reason"]) == ("daily", "stopped", "interrupted")
+
+
+def test_unexpected_error_marks_run_failed(conn, listing_html, product_html, tmp_path):
+    def handler(request):
+        raise RuntimeError("boom")
+
+    with pytest.raises(RuntimeError):
+        crawl.crawl_listings(conn, make_fetcher(handler, tmp_path), Config())
+    run = last_run(conn)
+    assert run["status"] == "failed" and "boom" in run["stop_reason"]
+
+
+def test_cli_returns_130_on_interrupt(tmp_path, monkeypatch, capsys):
+    monkeypatch.chdir(tmp_path)
+
+    def boom(*a, **k):
+        raise KeyboardInterrupt
+
+    monkeypatch.setattr(crawl, "crawl_listings", boom)
+    from zakaz_fish.__main__ import main
+    assert main(["crawl-listings", "--force"]) == 130
+    assert "Перервано" in capsys.readouterr().err
+
+
+def test_listings_stop_on_redirect_without_following(conn, listing_html, product_html, tmp_path):
+    """Реальна поведінка сайту: ?page=N+1 після останньої сторінки редіректить (307)."""
+    seen = []
+
+    def handler(request):
+        url = str(request.url)
+        seen.append(url)
+        if "page=3" in url:
+            return httpx.Response(307, headers={"location": url.split("?")[0]})
+        if "page=2" in url:  # друга сторінка з іншими товарами
+            return httpx.Response(200, text=listing_html.replace("--novus", "--zzz").replace("--04820", "--14820"))
+        return httpx.Response(200, text=listing_html)
+
+    f = make_fetcher(handler, tmp_path)
+    run_id, status = crawl.crawl_listings(conn, f, Config())
+    assert status == "ok"
+    assert f.requests == 30  # 10 категорій × (стор. 1, 2, редірект на 3); без запитів за Location
+    assert len([u for u in seen if "page=3" in u]) == 10
+    assert len([u for u in seen if "?" not in u]) == 10  # лише сторінки 1
+    assert not list((tmp_path / run_id / "listing").glob("*_p3.html.gz"))

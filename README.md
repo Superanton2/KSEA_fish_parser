@@ -25,7 +25,7 @@ cp config.example.toml config.toml   # за потреби відредагуй�
 | `city` | `kyiv` | місто в URL (параметр, не константа) |
 | `lang` | `uk` | мова в URL |
 | `root_category` | `fish-and-seafood-zakaz` | батьківська категорія |
-| `db_path`, `raw_dir` | `data/zakaz_fish.sqlite`, `data/raw` | база та стиснуті сирі відповіді |
+| `db_path`, `raw_dir`, `out_dir` | `data/zakaz_fish.sqlite`, `data/raw`, `data/out` | база, стиснуті сирі відповіді, каталог експорту |
 | `delay_min_s`, `delay_max_s` | 1.5, 3.0 | випадкова пауза між запитами |
 | `timeout_s` | 30 | таймаут запиту |
 | `max_pages_per_category` | 100 | запобіжник пагінації |
@@ -45,7 +45,7 @@ python -m zakaz_fish smoke-check                  # рівно 3 запити д
 python -m zakaz_fish crawl-listings
 python -m zakaz_fish crawl-details --mode new --limit 20
 python -m zakaz_fish stats
-python -m zakaz_fish export                       # -> data/out/
+python -m zakaz_fish export                       # -> out_dir (data/out)
 ```
 
 Рекомендований порядок: `init-db` → `seed` → `pytest` → `smoke-check` → `crawl-listings` →
@@ -65,8 +65,10 @@ python -m zakaz_fish export                       # -> data/out/
 | `crawl-listings` | обхід батьківської категорії та підкатегорій, `listing_prices`, `last_seen`, `is_active` |
 | `crawl-details --mode new\|all\|stale:<днів> [--limit N]` | сторінки товарів: характеристики, склад, КБЖУ, хлібні крихти |
 | `daily` | `crawl-listings` + `crawl-details --mode new` в одному run |
-| `export` | `data/out/products.csv`, `listing_prices_latest.csv`, `zakaz_fish.xlsx` (CSV: UTF-8 з BOM) |
+| `export` | `<out_dir>/products.csv`, `listing_prices_latest.csv`, `zakaz_fish.xlsx` (CSV: UTF-8 з BOM) |
 | `stats` | кількість товарів за `id_type`, категоріями, мережами |
+
+`products.details_status`: `ok`, `empty` (сторінка без хлібних крихт і Taxon), `not_found` (HTTP 404; `--mode new` і `stale` такі товари не вибирають), `error`. `details_scraped_at` ставиться лише при `ok`. 5 порожніх сторінок поспіль зупиняють run (`stopped`). Ctrl+C позначає run `stopped` з причиною `interrupted`, зібране зберігається.
 
 `is_active = 0` ставиться лише після запуску `crawl-listings`, що завершився `ok` для всіх категорій.
 

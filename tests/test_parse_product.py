@@ -49,3 +49,14 @@ def test_unknown_taxon_is_kept():
     html = ('<ul><li data-marker="Taxon foo"><p class="ProductAbout__entryTitle">Щось</p>'
             '<p class="ProductAbout__entryValue">X</p></li></ul>')
     assert parse_product(html).attributes == {"foo": ("Щось", "X")}
+
+
+def test_relative_breadcrumb_hrefs(fixtures_dir, details):
+    html = (fixtures_dir / "product_novus02877258000000_relative.html").read_text(encoding="utf-8")
+    assert 'href="/uk/kyiv/' in html
+    assert parse_product(html).breadcrumbs == details.breadcrumbs
+
+
+def test_is_empty(details):
+    assert not details.is_empty
+    assert parse_product("<html><body><h1>Назва</h1></body></html>").is_empty

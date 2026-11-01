@@ -65,7 +65,8 @@ CREATE TABLE IF NOT EXISTS products (
   first_seen TEXT NOT NULL, 
   last_seen TEXT NOT NULL,
   is_active INTEGER NOT NULL DEFAULT 1,
-  details_scraped_at TEXT
+  details_scraped_at TEXT,
+  details_status TEXT               -- ok | empty | not_found | error
 );
 
 CREATE TABLE IF NOT EXISTS product_categories (
@@ -122,8 +123,22 @@ def connect(db_path: str | Path) -> sqlite3.Connection:
     return conn
 
 
+# Колонки, додані після першої версії схеми: (таблиця, колонка, тип)
+MIGRATIONS = [
+    ("products", "details_status", "TEXT"),
+]
+
+
+def _migrate(conn: sqlite3.Connection) -> None:
+    for table, column, ctype in MIGRATIONS:
+        cols = {r[1] for r in conn.execute(f"PRAGMA table_info({table})")}
+        if column not in cols:
+            conn.execute(f"ALTER TABLE {table} ADD COLUMN {column} {ctype}")
+
+
 def init_db(conn: sqlite3.Connection) -> None:
     conn.executescript(SCHEMA)
+    _migrate(conn)
     conn.commit()
 
 

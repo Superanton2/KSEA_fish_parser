@@ -65,6 +65,8 @@ def run_smoke(conn: sqlite3.Connection, cfg: Config, fetcher: Fetcher,
                                 "на сторінці 1 немає карток, сторінку товару не запитано"))
     except StopCrawl as e:
         stop_reason = str(e)
+        if e.body:
+            _save(live_dir, "blocked_response.html", e.body)
         checks.append(Check("Доступ до сайту", False, f"ЗУПИНКА: {e}"))
     except FetchError as e:
         checks.append(Check("Доступ до сайту", False, str(e)))
