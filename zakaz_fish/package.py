@@ -302,7 +302,7 @@ def build_qa(conn: sqlite3.Connection, cfg: Config, sid: str, t: dict[str, pd.Da
     for r in stats.itertuples():
         full = r.site_total is not pd.NA and r.site_total and r.unique_seen >= 0.95 * r.site_total
         total = "—" if r.site_total is pd.NA else int(r.site_total)
-        flag = "" if (r.status == "not_found" or total == "—" or full or r.filtered_out) else "<95%"
+        flag = "" if (r.status == "not_found" or total in ("—", 0) or full or r.filtered_out) else "<95%"
         add("Місто × розділ", f"{r.city_slug} / {r.category_slug} ({r.scope})",
             f"site_total={total}, зібрано={r.unique_seen}, сторінок={r.pages_fetched}, відфільтровано={r.filtered_out}, "
             f"немає в наявності={r.out_of_stock}, статус={r.status}", flag)

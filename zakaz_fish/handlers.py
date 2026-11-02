@@ -182,6 +182,13 @@ def city_listing_redirect(ctx: Ctx, task, resp, p: dict) -> str:
 
 def product_detail(ctx: Ctx, task, html: str, p: dict) -> None:
     pid = p["product_id"]
+    final_path = urlsplit(ctx.last_final_url or task["url"]).path
+    if "/products/" not in final_path:
+        # Сайт відправляє недоступну для гостя без адреси картку на головну (307 -> /uk/) замість 404.
+        # Пілот 02.11.2026: усі такі товари були лише на вітринах. Це стан «немає картки», а не зміна верстки.
+        log.info("Картка %s редіректить на %s: details_status=not_found", pid, ctx.last_final_url)
+        ctx.conn.execute("UPDATE products SET details_status = 'not_found' WHERE product_id = ?", (pid,))
+        return
     d = parse_product(html, ctx.cfg.store_descriptions)
     if d.is_empty:
         ctx.conn.execute("UPDATE products SET details_status = 'empty' WHERE product_id = ?", (pid,))

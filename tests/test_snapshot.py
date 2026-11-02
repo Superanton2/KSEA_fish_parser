@@ -196,3 +196,23 @@ def test_city_check_rejects_wrong_city(env):
     run(env, transport=httpx.MockTransport(handler), stages=["city_listing"])
     assert conn.execute("SELECT COUNT(*) FROM tasks WHERE stage='city_listing' AND last_error LIKE 'unexpected_page%'"
                         " AND task_key LIKE 'kyiv|%' AND attempts > 0").fetchone()[0] > 0
+
+
+def test_product_redirected_to_home_is_not_found_not_unexpected(env):
+    """Пілот 02.11.2026: картки лише з вітрин редіректять на /uk/; це не зупинка й не `empty`."""
+    from datetime import date
+    from types import SimpleNamespace
+    from zakaz_fish.handlers import Ctx, product_detail
+    cfg, conn = env
+    snapshot.create_snapshot(conn, cfg, SID)
+    conn.execute("INSERT INTO products (product_id, id_type, url, first_seen, last_seen) VALUES "
+                 "('04820186620320', 'ean', 'https://zakaz.ua/uk/products/x--04820186620320/', 'a', 'a')")
+    ctx = Ctx(conn, cfg, SID, date(2026, 11, 2), last_final_url="https://zakaz.ua/uk/")
+    task = {"url": "https://zakaz.ua/uk/products/x--04820186620320/"}
+    product_detail(ctx, task, "<html><h1>Головна</h1></html>", {"product_id": "04820186620320"})
+    assert conn.execute("SELECT details_status FROM products").fetchone()[0] == "not_found"
+    # справжня порожня картка (URL товару, але без даних) лишається Unexpected
+    from zakaz_fish.handlers import Unexpected
+    ctx.last_final_url = task["url"]
+    with pytest.raises(Unexpected):
+        product_detail(ctx, task, "<html><h1>x</h1></html>", {"product_id": "04820186620320"})
