@@ -176,28 +176,6 @@ def test_unexpected_pages_five_in_a_row_stop_with_code_3(env):
     assert run(env, transport=httpx.MockTransport(handler)) == 3
 
 
-def test_city_check_rejects_wrong_city(env):
-    import httpx
-    cfg, conn = env
-    snapshot.create_snapshot(conn, cfg, SID)
-    site = make_site()
-
-    def handler(req):
-        r = site.handle_request(req)
-        if req.url.path.startswith("/uk/kyiv/") and r.status_code == 200:
-            return httpx.Response(200, text=r.text.replace("у місті Київ", "у місті Одеса"))
-        return r
-
-    run(env, transport=httpx.MockTransport(handler), stages=["city_listing"])
-    # перша сторінка задає ім'я міста (Одеса), тож порівняння з Києвом не виникає; перевіряємо протилежне:
-    conn.execute("UPDATE cities SET name_uk = 'Київ' WHERE city_slug = 'kyiv'")
-    conn.execute("UPDATE tasks SET status='pending', attempts=0, next_attempt_at=NULL WHERE stage='city_listing'")
-    conn.commit()
-    run(env, transport=httpx.MockTransport(handler), stages=["city_listing"])
-    assert conn.execute("SELECT COUNT(*) FROM tasks WHERE stage='city_listing' AND last_error LIKE 'unexpected_page%'"
-                        " AND task_key LIKE 'kyiv|%' AND attempts > 0").fetchone()[0] > 0
-
-
 def test_product_redirected_to_home_is_not_found_not_unexpected(env):
     """Пілот 02.11.2026: картки лише з вітрин редіректять на /uk/; це не зупинка й не `empty`."""
     from datetime import date
@@ -216,3 +194,53 @@ def test_product_redirected_to_home_is_not_found_not_unexpected(env):
     ctx.last_final_url = task["url"]
     with pytest.raises(Unexpected):
         product_detail(ctx, task, "<html><h1>x</h1></html>", {"product_id": "04820186620320"})
+
+
+def test_city_name_variant_in_h1_does_not_stop(env):
+    """Сервер 02.11.2026: Івано-Франківськ мав у H1 то «Ивано-Франковск», то «Івано-Франківськ»."""
+    import httpx
+    cfg, conn = env
+    snapshot.create_snapshot(conn, cfg, SID)
+    site = make_site()
+    seen = {"n": 0}
+
+    def handler(req):
+        r = site.handle_request(req)
+        if req.url.path.startswith("/uk/ivano-frankivsk/") and r.status_code == 200:
+            seen["n"] += 1
+            if seen["n"] == 1:      # перша сторінка міста приходить із російською назвою
+                return httpx.Response(200, text=r.text.replace("Івано-Франківськ", "Ивано-Франковск"))
+        return r
+
+    assert run(env, transport=httpx.MockTransport(handler)) == 0
+    assert conn.execute("SELECT name_uk FROM cities WHERE city_slug='ivano-frankivsk'").fetchone()[0] == "Івано-Франківськ"
+    assert not conn.execute("SELECT 1 FROM tasks WHERE last_error LIKE 'unexpected%' AND stage='city_listing'").fetchone()
+
+
+def test_wrong_city_in_breadcrumb_is_unexpected(env):
+    import httpx
+    cfg, conn = env
+    snapshot.create_snapshot(conn, cfg, SID)
+    site = make_site()
+
+    def handler(req):
+        r = site.handle_request(req)
+        if req.url.path.startswith("/uk/kyiv/") and r.status_code == 200:
+            return httpx.Response(200, text=r.text.replace('href="/uk/kyiv/"', 'href="/uk/lviv/"'))
+        return r
+
+    run(env, transport=httpx.MockTransport(handler), stages=["city_listing"])
+    assert conn.execute("SELECT COUNT(*) FROM tasks WHERE task_key LIKE 'kyiv|%' AND last_error LIKE '%хлібна крихта%'").fetchone()[0] > 0
+
+
+def test_chain_without_stores_is_done_not_unexpected(env):
+    """8 із 19 мереж мають порожній список магазинів: це не зупинка."""
+    from datetime import date
+    from zakaz_fish.handlers import Ctx, Unexpected, store_list
+    cfg, conn = env
+    snapshot.create_snapshot(conn, cfg, SID)
+    ctx = Ctx(conn, cfg, SID, date(2026, 11, 5))
+    task = {"url": "https://onde.zakaz.ua/uk/stores/"}
+    store_list(ctx, task, "<html><body><h1>Адреси магазинів ONDE в Україні</h1></body></html>", {"chain_id": "onde", "page": 1})
+    with pytest.raises(Unexpected):
+        store_list(ctx, task, "<html><body>нічого</body></html>", {"chain_id": "onde", "page": 1})

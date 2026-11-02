@@ -32,6 +32,7 @@ class ListingPage:
     subcategories: list[str] = field(default_factory=list)
     h1: str | None = None
     city_name: str | None = None  # з H1 «<Категорія> у місті <Місто>»
+    city_slug: str | None = None  # місто з хлібної крихти «Breadcrumb Category 1» (/uk/<slug>/)
     tags_all_slug: str | None = None  # посилання «Усі» у блоці CategoriesTags (категорія, чиї це підрозділи)
 
 
@@ -97,5 +98,7 @@ def parse_listing(html: str, category_slug: str | None = None) -> ListingPage:
 
     h1 = " ".join(soup.h1.get_text(" ", strip=True).split()) if soup.h1 else None
     m = CITY_RE.search(h1 or "")
+    crumb = soup.select_one('a[data-marker="Breadcrumb Category 1"][href]')
+    crumb_slug = crumb["href"].rstrip("/").rsplit("/", 1)[-1] if crumb else None
     return ListingPage(total=total, tiles=tiles, subcategories=subcategories, h1=h1,
-                       city_name=m.group(1) if m else None, tags_all_slug=all_slug)
+                       city_name=m.group(1) if m else None, city_slug=crumb_slug, tags_all_slug=all_slug)

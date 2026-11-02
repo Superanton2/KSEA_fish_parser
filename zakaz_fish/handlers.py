@@ -99,19 +99,27 @@ def _bump_stats(ctx: Ctx, city: str, cat: str, scope: str, **inc) -> None:
 
 # --- S3: каталог агрегатора ---
 
+def _has_ukrainian(name: str | None) -> bool:
+    return any(ch in (name or '') for ch in 'іїєґІЇЄҐ')
+
+
 def city_listing(ctx: Ctx, task, html: str, p: dict) -> None:
     conn, cfg, sid = ctx.conn, ctx.cfg, ctx.snapshot_id
     city, scope, cat, page = p["city"], p["scope"], p["category"], p["page"]
     parsed = parse_listing(html, cat)
     if not parsed.h1 or not parsed.city_name:
         raise Unexpected(f"немає H1 з містом на {task['url']}")
+    # Місто звіряємо за хлібною крихтою (/uk/<slug>/): назва в H1 нестабільна (на сервері для Івано-Франківська
+    # траплялось «Ивано-Франковск» при українському шаблоні). Назва лише інформаційна.
+    if parsed.city_slug is not None and parsed.city_slug != city:
+        raise Unexpected(f"хлібна крихта веде в місто {parsed.city_slug!r}, очікувалось {city!r}")
     row = conn.execute("SELECT name_uk FROM cities WHERE city_slug = ?", (city,)).fetchone()
     if row is None:
         conn.execute("INSERT INTO cities (city_slug, name_uk, source) VALUES (?, ?, 'selector')",
                      (city, parsed.city_name))
-    elif row["name_uk"] is None:
+    elif row["name_uk"] is None or (not _has_ukrainian(row["name_uk"]) and _has_ukrainian(parsed.city_name)):
         conn.execute("UPDATE cities SET name_uk = ? WHERE city_slug = ?", (parsed.city_name, city))
-    elif row["name_uk"] != parsed.city_name:
+    elif parsed.city_slug is None and row["name_uk"] != parsed.city_name:
         raise Unexpected(f"H1 містить місто {parsed.city_name!r}, очікувалось {row['name_uk']!r}")
 
     if page == 1:
@@ -334,8 +342,13 @@ def store_list(ctx: Ctx, task, html: str, p: dict) -> None:
     chain, page = p["chain_id"], p["page"]
     parsed = parse_store_list(html, task["url"])
     if not parsed.stores:
+        if page == 1 and not BeautifulSoup(html, "lxml").h1:
+            raise Unexpected(f"у списку магазинів {chain} немає ні магазинів, ні заголовка")
         if page == 1:
-            raise Unexpected(f"у списку магазинів {chain} немає магазинів")
+            # Сторінка є (з заголовком), магазинів немає: мережа без довідника (пілот: 8 з 19 мереж)
+            log.info("Мережа %s: у списку магазинів нема жодного магазину", chain)
+            ctx.conn.execute("UPDATE chain_storefronts SET notes = COALESCE(notes || '; ', '') || 'немає списку магазинів' "
+                             "WHERE snapshot_id = ? AND chain_id = ?", (sid, chain))
         return
     for s in parsed.stores:
         conn.execute(

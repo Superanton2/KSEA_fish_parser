@@ -44,7 +44,7 @@ def make_site(log: list | None = None, fail_first_n_500: int = 0):
                 ("kyiv", "fish-and-seafood-zakaz"): (F / "listing_fish_and_seafood_p1.html").read_text(encoding="utf-8"),
                 ("ivano-frankivsk", "fish-and-seafood-zakaz"): sample("agg_if_fish_p1"),
                 ("ivano-frankivsk", "caviar-zakaz"): sample("agg_if_caviar_p1"),
-                ("ivano-frankivsk", "packed-fish-snacks-zakaz"): sample("agg_poltava_snacks_p1").replace("Полтава", "Івано-Франківськ"),
+                ("ivano-frankivsk", "packed-fish-snacks-zakaz"): sample("agg_poltava_snacks_p1").replace("Полтава", "Івано-Франківськ").replace("/uk/poltava/", "/uk/ivano-frankivsk/"),
                 ("ivano-frankivsk", "canned-fish-zakaz"): sample("agg_if_fresh_fish_p1"),   # порожня категорія
             }
             if (city, cat) in table:
